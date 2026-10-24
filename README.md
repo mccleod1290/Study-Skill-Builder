@@ -87,12 +87,17 @@ People and work this system is built on:
 - **Steph Ango (kepano)**: obsidian-skills, vendored in `skills/obsidian/` (MIT). https://github.com/kepano/obsidian-skills
 - **Anthropic**: skill-creator, adapted in `skills/misc/skill_creator/` (Apache 2.0). https://github.com/anthropics/skills/tree/main/skills/skill-creator
 - **Agent Skills specification**: https://agentskills.io/specification. **Claude Code skills docs**: https://code.claude.com/docs/en/skills
-- **Nick Saraev**: the interviewer, map maker and diagnostician roles in phases 1 and 4.
+- **Nick Saraev**: the study method behind the phases. His talk suggests about ten agents for learning, which this system splits across the four phases (map, learn, exam, feedback). https://youtu.be/FSXHk4hMrY8
+- **Andrej Karpathy**: the writing style, prose edited at the level of its structure like an AST, not line by line. https://x.com/karpathy/status/2105819303471976479
 - **3Blue1Brown and the manim community**: the explainer video style. https://docs.manim.community
 - **Diagram tools**: diagram-design (https://github.com/cathrynlavery/diagram-design), anatomy (https://github.com/wheresryan22/anatomy), archify (https://github.com/tt-a1i/archify).
 - **ASD-STE100 Simplified Technical English**: the plain writing rule. https://www.asd-ste100.org/
 - **Geoffrey Huntley**: the Ralph loop technique, used to build this repo. https://ghuntley.com/ralph/
 - In Felix Rieseberg's post: Tom Kelley and Jonathan Littman (nouns to verbs), Locke and Latham (hard, specific goals).
+
+## The story, and thanks to failure
+
+This took a long time and a lot of failure. From late February through October I tried to build a study system that would teach me and get it right, and it kept not working. That struggle is the reason it now iterates: it turns what I learn into skills and improves itself. I hope it helps all of us pick up new skills fast, or at least in a reasonable time, in the age of AI.
 
 ## Licenses
 
