@@ -1,10 +1,28 @@
 # Study-Skill-Builder
 
-**A learning operating system for AI agents.** Four study phases, three specialized agents (depth, range, altitude), a private LLM wiki, and a skill factory that turns what you learn into runnable skills. Built for security study (web pentest, cloud, AI security), but it works for any field.
+**A learning operating system for humans and AI agents — built to kill passive learning.**
 
-This repo is the **skeleton**: phases, skills, rules, the agents, and a self-improving loop that learns from the harness trajectory. Your knowledge stays on your machine. The LLM wiki, the skills the factory builds, and every study artifact are private by design and never live here.
+Most study today is passive. You watch the video, read the page, copy the solution, and nod along. It feels like learning. It is not. You remember having seen it, not how it works, and you cannot do it when it counts. Exposure is not skill.
+
+This OS forces the opposite. Whether a **person** runs it by hand or an **AI agent** runs it for you, the same loop makes you do the active moves that actually build a skill: map the thing first, explain it from first principles, get tested until a gap has a name, build the real thing on a real target, then find what you still missed and close it. Same discipline for a human and for an agent — because the way you beat passive learning is the same for both.
+
+It carries four study phases, a research skill, three ambition agents (depth, range, altitude), a private LLM wiki, and a skill factory that turns what you learn into runnable skills. Built for security study (web pentest, cloud, AI security); it works for any field.
+
+This repo is the **skeleton**: phases, skills, rules, the agents, and a self-improving loop. Your knowledge stays on your machine. The LLM wiki, the skills the factory builds, and every study artifact are private by design and never live here.
 
 ![Study-Skill-Builder architecture](docs/architecture.webp)
+
+## Passive in, active out
+
+| passive habit it replaces | the active move it forces | who does it |
+|---|---|---|
+| watching a video, reading a chapter | **map** the parts, the dependencies, the stuck points before any explaining (phase 1) | human or agent |
+| highlighting and re-reading | **explain** from first principles, every claim cited and graded (phase 2) | human or agent |
+| nodding along, feeling sure | **get tested** — a Socratic spar and an exam until a real gap has a name (phase 3) | human or agent |
+| copying the solution | **build** it on a real lab, CTF, bounty or work target | human or agent |
+| moving on and forgetting | **diagnose** the shared root of repeated misses, then loop back (phase 4) | human or agent |
+
+A lab solved by copying the walkthrough is logged as *exposure*, not *solved*. That one rule is the whole philosophy: the system refuses to let you fool yourself.
 
 ## The loop
 
@@ -60,7 +78,7 @@ Shared rules: each agent runs in its own context window, no agent grades its own
 
 ## Quick start
 
-1. Clone the repo **with submodules** (the research skill is one): `git clone --recursive <url>`, or after a plain clone run `git submodule update --init`. Open it with Claude Code, Codex, Copilot or any agent that reads `AGENTS.md`.
+1. Clone the repo **with submodules** (the research skill is one): `git clone --recursive <url>`, or after a plain clone run `git submodule update --init`. Open it with Claude Code, Codex, Copilot or any agent that reads `AGENTS.md` — or run the phases yourself by hand. A person and an agent follow the same steps.
 2. Read `AGENTS.md`, then `REPO_MAP.md`.
 3. Copy the agents where your tool loads them, for example for Claude Code:
 
@@ -116,7 +134,7 @@ People and work this system is built on:
 
 ## The story, and thanks to failure
 
-This took a long time and a lot of failure. From late February through October I tried to build a study system that would teach me and get it right, and it kept not working. That struggle is the reason it now iterates: it turns what I learn into skills and improves itself. I hope it helps all of us pick up new skills fast, or at least in a reasonable time, in the age of AI.
+This took a long time and a lot of failure. From late February through October I tried to build a study system that would teach me and get it right, and it kept not working. The thing I kept running into was my own passive learning: watching, reading, nodding, and still not being able to do the thing. So I built an OS that will not let me stay passive, and that an agent can run by the same rules. That struggle is why it now iterates: it turns what I learn into skills and improves itself. I hope it helps all of us pick up new skills fast, or at least in a reasonable time, in the age of AI.
 
 ## Licenses
 
