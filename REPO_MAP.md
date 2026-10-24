@@ -6,7 +6,7 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 
 - Rules: `.rules/`. Read `.rules/artifacts-and-sessions.md` before writing any file.
 - All AI output goes under `Artifacts/`. Deliverables are HTML. Topic folders have no dates in names.
-- Skills live under `skills/`. Scripts live under `skills/scripts/`. Hooks config is `.github/hooks/study-os.json`.
+- Skills live under `skills/`. Scripts live under `skills/scripts/`. The self-improving loop reads the harness trajectory (`.rules/harness-and-memory.md`); the old session hooks are removed.
 - Source case documents (his input, private) are in `user-input-learning-text/`. Read only. Never move or edit.
 
 ## Skills
@@ -40,7 +40,8 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 | `practical_build` | `skills/phase_3/skills/practical_build/SKILL.md` | phase 3 practical exam. the brief is one work item from the phase 1 map, aimed at the target. |
 | `socratic_spar` | `skills/phase_3/skills/socratic_spar/SKILL.md` | phase 3 sparring partner. one Socratic question at a time against the phase 2 page, until the hole in his understanding has a name. |
 | `diagnostician` | `skills/phase_4/skills/diagnostician/SKILL.md` | phase 4 diagnostician. finds the shared root behind repeated misses in his prompts, the exam, and the spar. |
-| `harness_clerk` | `skills/phase_4/skills/harness_clerk/SKILL.md` | phase 4 clerk. does not write the hook log. reads Artifacts/sessions and files the study OS into one topic folder per subject, with harness timestamps. |
+| `harness_clerk` | `skills/phase_4/skills/harness_clerk/SKILL.md` | phase 4 clerk. does not duplicate the trajectory. reads Artifacts/sessions and files the study OS into one topic folder per subject, with harness timestamps. |
+| `trajectory_distill` | `skills/self_improve/trajectory_distill/SKILL.md` | self-improvement loop. reads a DeepSeek Harness trajectory export (every assistant reasoning step and tool call) and turns it into two HTML files: one with all assistant reasoning, one with the reason... |
 | `skill_smith` | `skills/skill_factory/skill_smith/SKILL.md` | skill factory. turns the skill candidates from the depth, range and altitude agents into runnable, private skills: a step-by-step guide, scripts, a checklist, a lab and a verification test. |
 | `wiki_ingest` | `skills/wiki/wiki_ingest/SKILL.md` | llm wiki ingest. takes one source (a study artifact, an article, notes, a lab writeup) into the private llm_wiki vault: a source page, new or updated concept, connection, mental model and example page... |
 | `wiki_lint` | `skills/wiki/wiki_lint/SKILL.md` | llm wiki lint. health check of the private llm_wiki vault: contradictions, stale claims, orphan pages, ideas with no page, missing links, data gaps, and the next questions and sources to add. |
@@ -82,6 +83,7 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 - `skills/phase_3/` skills: academic_paper, examiner, practical_build, socratic_spar. files: PATHS.md, README.md, RULES.md
 - `skills/phase_4/` skills: diagnostician, harness_clerk. files: CHECK.md, PATHS.md, README.md, RULES.md
 - `skills/scripts/`. files: build_explorer.py, build_mindmap.py, check_coverage.py, check_visuals.py, export_public.py, learn_due.py, md_to_pdf.py, mindmap_template.html, repo_map.py, send_notes_email.py, tidy.py, validate_skill.py
+- `skills/self_improve/` skills: trajectory_distill. files: README.md
 - `skills/skill_factory/` skills: skill_smith
 - `skills/wiki/` skills: wiki_ingest, wiki_lint, wiki_query. files: SCHEMA.md
 
@@ -93,12 +95,7 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 | `build_mindmap.py` | `skills/scripts/build_mindmap.py` |  |
 | `check_coverage.py` | `skills/scripts/check_coverage.py` | check_coverage.py: does phase2_page.md cover every node of phase1_mindmap.json? |
 | `check_visuals.py` | `skills/scripts/check_visuals.py` | check_visuals.py: is the phase 2 visual pass sound? |
-| `export_public.py` | `skills/scripts/export_public.py` | Export the public skeleton (phases, skills, hooks, rules, .agents) to a separate folder. Allowlist copy, scrub, deny scan. |
-| `best_highlights.py` | `skills/scripts/hooks/best_highlights.py` | Write `best highlights.txt` inside a session folder. The name does not change. |
-| `log_deliverables.py` | `skills/scripts/hooks/log_deliverables.py` | Hook: log each deliverable delivered per run (a run = one session). |
-| `log_user_inputs.py` | `skills/scripts/hooks/log_user_inputs.py` | Hook: log every user input, verbatim, in one place. |
-| `paths.py` | `skills/scripts/hooks/paths.py` | Shared layout for the Study OS hooks. See .rules/artifacts-and-sessions.md. |
-| `study_os_hook.py` | `skills/scripts/hooks/study_os_hook.py` | Study OS harness hook. Usage: study_os_hook.py <event>  (JSON payload on stdin). |
+| `export_public.py` | `skills/scripts/export_public.py` | Export the public skeleton (phases, skills, rules, .agents, self-improve) to a separate folder. Allowlist copy, scrub, deny scan. |
 | `learn_due.py` | `skills/scripts/learn_due.py` | Is a usage review due? python skills/scripts/learn_due.py [--mark] |
 | `md_to_pdf.py` | `skills/scripts/md_to_pdf.py` | Markdown → PDF for Notes vault (WeasyPrint). Usage: md_to_pdf.py IN.md -o OUT.pdf |
 | `repo_map.py` | `skills/scripts/repo_map.py` | Regenerate REPO_MAP.md: where every skill, script, rule and artifact lives. |
@@ -109,11 +106,11 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 
 ## Hooks and rules
 
-- hooks config `.github/hooks/study-os.json`
 - rule `.rules/artifacts-and-sessions.md`
 - rule `.rules/brevity.md`
 - rule `.rules/context-isolation.md`
 - rule `.rules/grounding-and-confidence.md`
+- rule `.rules/harness-and-memory.md`
 - rule `.rules/html-deliverables.md`
 - rule `.rules/offsec-agent-architecture.md`
 - rule `.rules/phase-order-and-coverage.md`

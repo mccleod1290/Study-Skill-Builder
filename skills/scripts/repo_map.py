@@ -68,7 +68,7 @@ def build():
          "## Rules of the house", "",
          "- Rules: `.rules/`. Read `.rules/artifacts-and-sessions.md` before writing any file.",
          "- All AI output goes under `Artifacts/`. Deliverables are HTML. Topic folders have no dates in names.",
-         "- Skills live under `skills/`. Scripts live under `skills/scripts/`. Hooks config is `.github/hooks/study-os.json`.",
+         "- Skills live under `skills/`. Scripts live under `skills/scripts/`. The self-improving loop reads the harness trajectory (`.rules/harness-and-memory.md`); the old session hooks are removed.",
          "- Source case documents (his input, private) are in `user-input-learning-text/`. Read only. Never move or edit.", ""]
     L += ["## Skills", "", "| skill | path | what it does |", "|---|---|---|"]
     sk = [p for p in walk(ROOT / "skills", "SKILL.md")] + walk(ROOT / ".github", "SKILL.md")

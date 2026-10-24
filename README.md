@@ -2,7 +2,7 @@
 
 **A learning operating system for AI agents.** Four study phases, three specialized agents (depth, range, altitude), a private LLM wiki, and a skill factory that turns what you learn into runnable skills. Built for security study (web pentest, cloud, AI security), but it works for any field.
 
-This repo is the **skeleton**: phases, skills, hooks, rules, and the agents. Your knowledge stays on your machine. The LLM wiki, the skills the factory builds, and every study artifact are private by design and never live here.
+This repo is the **skeleton**: phases, skills, rules, the agents, and a self-improving loop that learns from the harness trajectory. Your knowledge stays on your machine. The LLM wiki, the skills the factory builds, and every study artifact are private by design and never live here.
 
 ![Study-Skill-Builder architecture](docs/architecture.webp)
 
@@ -13,8 +13,11 @@ Study-OS (phases 1-4 + research)  --study, practice, research, extract-->  LLM w
 LLM wiki                          --knowledge source-->                     depth | range | altitude agents
 the three agents                  --skill candidates-->                     skill factory
 skill factory                     --runnable skills (private)-->            labs, CTFs, bug bounty, work
-real-world use                    --execution feedback-->                   backlog and roadmap --> Study-OS
+real-world use                    --harness trajectory-->                    trajectory_distill (all reasoning, then gaps)
+the gaps                          --execution feedback-->                    backlog and roadmap --> Study-OS
 ```
+
+The loop closes on the **harness trajectory**. The runtime (the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)) records every run: the model's reasoning and every tool call. `trajectory_distill` reads that export, writes one HTML of all the reasoning and one of the reasoning and tool use the run did that the skill did not cover, emails both, and files the gaps back as feedback. So the skills improve from real runs, not from guesses.
 
 ## What is inside
 
@@ -28,8 +31,8 @@ real-world use                    --execution feedback-->                   back
 | LLM wiki skills | `skills/wiki/` | `SCHEMA.md` plus `wiki_ingest`, `wiki_query`, `wiki_lint` |
 | Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): wiki page syntax, bases, canvas, CLI, clean web capture |
 | Skill factory | `skills/skill_factory/skill_smith/` | turns agent output into a guide, scripts, a checklist, a lab and a verification test |
+| Self-improving loop | `skills/self_improve/trajectory_distill/` | reads a harness trajectory export; writes all-reasoning and gaps HTML; emails both; files gaps to feedback |
 | House skills | `skills/misc/` | `skill_creator`, `karpathy_agents_md`, `learn_from_sessions` |
-| Hooks | `.github/hooks/`, `.grok/hooks/`, `skills/scripts/hooks/` | log every prompt, tool call and deliverable per session, with secrets redacted |
 | Rules | `.rules/` | grounding and confidence grades, brevity, HTML deliverables, context isolation, phase order, skill authoring, visuals |
 | Map | `REPO_MAP.md` | where everything is. regenerate with `python skills/scripts/repo_map.py` |
 
@@ -49,7 +52,7 @@ Shared rules: each agent runs in its own context window, no agent grades its own
 |---|---|---|
 | LLM wiki | `llm_wiki/` with `raw/`, `wiki/{concepts,connections,mental_models,examples,sources}/`, `index.md`, `log.md` | `wiki_ingest` creates it on first run. open it in Obsidian as a vault |
 | Built skills | `skill_factory/inbox/`, `skill_factory/built/`, `skill_factory/feedback.md` | the three agents and `skill_smith` |
-| Study output | `Artifacts/` | the phases and the hooks |
+| Study output | `Artifacts/` | the phases |
 | Your sources | `user-input-learning-text/` | you. read only |
 
 `.gitignore` blocks all four. Keep your filled-in copy in a private repo.
@@ -67,7 +70,20 @@ Shared rules: each agent runs in its own context window, no agent grades its own
 4. Study a topic: run phase 1 on a book chapter, a course or a case, then phase 2.
 5. File the result in your wiki: `/wiki_ingest`.
 6. Go deeper, wider or higher with the three agents. Turn their candidates into skills with `/skill_smith`.
-7. Use the skills in labs, CTFs, bug bounty or work. Log what worked in `skill_factory/feedback.md`. Phase 4 and the altitude agent read it back into the roadmap.
+7. Use the skills in labs, CTFs, bug bounty or work.
+8. Close the loop: export the run from the harness (Trajectory tab, "Download session log") and run `/trajectory_distill`. It writes all-reasoning and gaps HTML, emails them, and files the gaps to `skill_factory/feedback.md`. Phase 4 and the altitude agent read it back into the roadmap.
+
+## Memory and the harness
+
+Three levels of memory, from raw to refined:
+
+- **Trajectory** (per run, raw). The [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) records every run: reasoning and tool calls. It is the input to `trajectory_distill`. This replaces the old session hooks, which never captured reasoning.
+- **Runtime recall** (across sessions, optional). [claude-mem](https://github.com/thedotmack/claude-mem) keeps session memory in a local store. Use it where your client supports it.
+- **Curated knowledge** (long-lived). The LLM wiki (`llm_wiki/`, kept private). This is the one that compounds.
+
+### Email
+
+The self-improvement pass can email the two HTML files. The script reads your SMTP settings from a local env file **outside the repo** — a Gmail app password goes in `~/.config/study-os/smtp.env`, never in the code, the repo, or a chat. Setup: `skills/self_improve/trajectory_distill/references/email-setup.md`.
 
 ## Keep your fork private-safe
 
@@ -92,6 +108,8 @@ People and work this system is built on:
 - **3Blue1Brown and the manim community**: the explainer video style. https://docs.manim.community
 - **Diagram tools**: diagram-design (https://github.com/cathrynlavery/diagram-design), anatomy (https://github.com/wheresryan22/anatomy), archify (https://github.com/tt-a1i/archify).
 - **ASD-STE100 Simplified Technical English**: the plain writing rule. https://www.asd-ste100.org/
+- **DeepSeek Harness (dsh)**: the runtime whose trajectory feeds the self-improving loop. https://github.com/deepseek-ai/deepseek-harness
+- **Alex Newman (@thedotmack)**: claude-mem, the runtime memory option. https://github.com/thedotmack/claude-mem
 - **Geoffrey Huntley**: the Ralph loop technique, used to build this repo. https://ghuntley.com/ralph/
 - In Felix Rieseberg's post: Tom Kelley and Jonathan Littman (nouns to verbs), Locke and Latham (hard, specific goals).
 

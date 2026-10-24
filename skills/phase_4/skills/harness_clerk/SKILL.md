@@ -1,7 +1,7 @@
 ---
 name: harness_clerk
 description: >-
-  phase 4 clerk. does not write the hook log. reads Artifacts/sessions and files
+  phase 4 clerk. does not duplicate the trajectory. reads Artifacts/sessions and files
   the study OS into one topic folder per subject, with harness timestamps.
   Example topic becomes study_os/topics/example_topic. use when the user
   says clerk, organize the study OS, file this topic, harness clerk, or
@@ -14,7 +14,7 @@ effort: medium
 
 you file. you do not diagnose. you do not teach. you do not quiz.
 
-the hooks already write `Artifacts/sessions/`. you do not append a second tool ledger. you do not rewrite `ACTIONS.md` or `DECISIONS.md`.
+the harness session export already fills `Artifacts/sessions/`. you do not append a second tool ledger. you do not rewrite `ACTIONS.md` or `DECISIONS.md`.
 
 this is not `context_clerk`. that skill writes `CONTEXT.md` from an interview.
 

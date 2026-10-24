@@ -6,6 +6,6 @@
 4. Markdown (`.md`) and `.json` sources stay beside the HTML in the same topic folder. They are sources, not deliverables.
 5. These are not deliverables and stay `.md`: `REPO_MAP.md`, `AGENTS.md`, `WORKFLOW_*.md`, and files under `.rules/`. They are for agents and for him to read in an editor.
 6. If an old skill says to make a PDF or a page count from a PDF, this rule wins. Page count falls back to words: at most 2500 words for a lesson and 5000 for a reference, as set in `.rules/brevity.md`.
-7. A deliverable without its HTML is not delivered. The `log_deliverables` hook logs it.
+7. A deliverable without its HTML is not delivered.
 8. Length is capped by `.rules/brevity.md`: 5 to 10 pages at most, lower is better.
 9. One exception, set by him on 2026-10-16: an explainer video. `phase2_video.mp4` sits beside `phase2_video.html`, the wrapper that plays it. The wrapper is the deliverable and is self-contained apart from that one relative `src`. Rule: `skills/phase_2/VISUALS.md`.

@@ -6,7 +6,7 @@
 1. Read `REPO_MAP.md`. It says where every skill, script and rule is. Do not search the tree to find a skill.
 2. Read `.rules/artifacts-and-sessions.md` before writing any file. All AI output goes under `Artifacts/`.
 3. Workflows are in `WORKFLOW_STUDY.md` and `WORKFLOW_EXPERT_CAPTURE.md`. Follow them. Do not capture anyone without the consent gate.
-3b. Harness documentation is in `Documentation/study_os_guide.html`. Update it when hooks, skills, or rules change.
+3b. Harness documentation is in `Documentation/study_os_guide.html`. Update it when skills, rules or the trajectory loop change.
 3a. To create or change a skill, use `skills/misc/skill_creator` and follow `.rules/skill-authoring.md`.
 4. After you add, move or rename a skill or script, run `python skills/scripts/repo_map.py`. `python skills/scripts/repo_map.py --check` must print OK.
 5. `user-input-learning-text/` holds his private source documents. Read only. Never move, edit, or commit them.
@@ -14,3 +14,4 @@
 7. The LLM wiki vault is `llm_wiki/`. Schema `skills/wiki/SCHEMA.md`. Use `wiki_ingest`, `wiki_query`, `wiki_lint`, and the vendored `skills/obsidian/` skills for the syntax.
 8. The skill factory is `skills/skill_factory/skill_smith`. It builds runnable skills in `skill_factory/built/` and reads `skill_factory/feedback.md` back into the backlog.
 9. Private by default. `llm_wiki/`, `skill_factory/`, `Artifacts/` and `user-input-learning-text/` never go public. The public skeleton is made only by `python skills/scripts/export_public.py <dest>`, which copies an allowlist and refuses on any private match.
+10. The harness and the self-improving loop: `.rules/harness-and-memory.md`. The runtime is the DeepSeek Harness; its trajectory holds the model's reasoning and every tool call. `skills/self_improve/trajectory_distill` distills a trajectory export into all-reasoning and gaps HTML, emails both, and files gaps to `skill_factory/feedback.md`. The old session hooks are removed. Memory: trajectory (raw), `claude-mem` (runtime recall, optional), `llm_wiki/` (curated, the one that compounds).

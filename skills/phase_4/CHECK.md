@@ -12,7 +12,7 @@ Source: the phase 4 request. Pass 1 is the list. Pass 2 is filled after the file
 6. Can send him back through phase 3.
 7. Can send him back through phase 2 or phase 1. This is the last phase, so the route can be any earlier phase.
 8. Built from Saraev's diagnostician. Same mistake, shared root. Last many sessions. The leap from X to Y because Z is missing. Learn Z once.
-9. Clerk does not replace the hooks. The harness already logs.
+9. Clerk does not duplicate the trajectory. The harness already logs.
 10. Clerk reads those logs and files the study OS by topic folder.
 11. Example shape: Example topic is one folder. Artifacts inside it. Timestamps come from the harness.
 12. Existing sessions and later sessions use the same rule.

@@ -29,7 +29,7 @@ Evidence is the harness and the exam files. A weakness that is not in those file
 
 ## Clerk
 
-The hooks already write the ledger. The clerk does not log a second copy of the tool trail.
+The harness trajectory is the ledger. The clerk does not log a second copy of the tool trail.
 
 The clerk files the study OS by topic. One topic, one folder. `example_topic` holds that topic's work. Every artifact is listed with the harness timestamp. If the harness has no timestamp, write `no harness timestamp`. Do not invent one.
 

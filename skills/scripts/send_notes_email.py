@@ -15,8 +15,9 @@ from pathlib import Path
 
 
 def load_smtp() -> dict:
-    env_path = Path.home() / ".config/study-os/smtp.env"
-    if env_path.is_file():
+    env_path = next((p for p in (Path.home() / ".config/study-os/smtp.env",
+                                 Path.home() / ".config/study-os/smtp.env") if p.is_file()), None)
+    if env_path:
         data: dict = {}
         for line in env_path.read_text().splitlines():
             line = line.strip()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the public skeleton (phases, skills, hooks, rules, .agents) to a separate folder. Allowlist copy, scrub, deny scan.
+"""Export the public skeleton (phases, skills, rules, .agents, self-improve) to a separate folder. Allowlist copy, scrub, deny scan.
 python skills/scripts/export_public.py <dest>          copy, scrub, regenerate REPO_MAP, scan
 python skills/scripts/export_public.py <dest> --scan   scan only
 Private by default: llm_wiki/, skill_factory/, Artifacts/, user-input-learning-text/ and every study topic stay here.

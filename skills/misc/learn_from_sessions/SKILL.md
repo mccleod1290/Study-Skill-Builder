@@ -24,7 +24,7 @@ run `python skills/scripts/learn_due.py`. it prints DUE or OK. if DUE, tell him 
 2. `actions.md` in the same folders. what the AI did after each prompt.
 3. `deliverables.md` and `Artifacts/artifacts/*/HISTORY.md`. what was delivered, and how often a file was redone.
 4. the prior review, `Artifacts/artifacts/self_learning/`. do not repeat it. update it.
-5. if the hooks are empty or thin, use the host session store: `~/.copilot/session-state/<id>/events.jsonl` has the user and assistant messages and the tool calls. the session_store_sql tool reads the same history. say which source you used.
+5. the source is the harness trajectory export (the harness "Download session log"). it has the user and assistant messages, the model's reasoning, and the tool calls. `trajectory_distill` parses it. say which export you used.
 
 read the raw logs yourself. a compaction summary is not evidence. never rely on memory of a conversation.
 

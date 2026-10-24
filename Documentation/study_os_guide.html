@@ -32,12 +32,12 @@ input{background:var(--card);border:1px solid var(--line);color:var(--fg);border
 <div class="meta"><span>Words: <b>1920</b></span><span>About <b>3.8</b> pages (limit 10)</span><span>Confidence: <span class="b b5">5</span> &times; 14 <span class="b b4">4</span> &times; 2 <span class="b b3">3</span> &times; 1 <span class="b b2">2</span> &times; 1 <span class="b b1">1</span> &times; 0</span><span>Made 2026-10-06</span></div></header>
 <nav><div><a href="#what">What</a><a href="#start">Quick start</a><a href="#how">Harness</a><a href="#skills">Skills</a><a href="#extend">Extend</a><a href="#cases">Use cases</a><a href="#rules">Rules</a><a href="#fix">Problems</a><a href="#refs">Refs</a></div></nav><main>
 <section id="what"><h2>1. What it is</h2>
-<p>Study OS is a folder of rules, skills, scripts and hooks. It helps one person learn a hard topic from zero. An AI agent runs it. The folder keeps every prompt, action and deliverable in plain files.</p>
+<p>Study OS is a folder of rules, skills, scripts and agents. It helps one person learn a hard topic from zero. An AI agent runs it. The harness keeps every prompt, reasoning step, action and deliverable in its trajectory.</p>
 <div class="grid4">
 <div class="card"><h4>Rules</h4><p>Short files in <code>.rules/</code>. They bind every answer.</p></div>
 <div class="card"><h4>Skills</h4><p>Task recipes in <code>skills/</code>. Four phases plus a misc group.</p></div>
 <div class="card"><h4>Scripts</h4><p>Python in <code>skills/scripts/</code>. Same input, same output.</p></div>
-<div class="card"><h4>Hooks</h4><p>Small programs that log each session. Config: <code>.github/hooks/study-os.json</code>.</p></div>
+<div class="card"><h4>Trajectory</h4><p>The harness records the whole run. <code>skills/self_improve/</code> distills it into skill fixes.</p></div>
 </div>
 <p>Four ideas hold it together. Output is HTML only <b class="b b5" title="confidence 5 of 5">5</b>. Every claim is cited and scored 1 to 5. Text stays short. Logs are separate from deliverables.</p></section>
 
@@ -52,41 +52,34 @@ input{background:var(--card);border:1px solid var(--line);color:var(--fg);border
 </ol>
 <div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>python skills/scripts/repo_map.py
 python skills/scripts/repo_map.py --check   # must print OK</pre></div>
-<p class="note">You need Python 3. The mind map builder and the hooks use only the standard library, as far as the scripts show. PDF export needs WeasyPrint and is off by default.</p></section>
+<p class="note">You need Python 3. The mind map builder and the trajectory distiller use only the standard library. PDF export needs WeasyPrint and is off by default.</p></section>
 
 <section id="how"><h2>3. How the harness works</h2>
-<p>Three layers. The <b>agent</b> does the work. <b>Rules and skills</b> tell it how. <b>Hooks</b> watch the session and write files.</p>
+<p>Three layers. The <b>agent</b> does the work. <b>Rules and skills</b> tell it how. The <b>harness trajectory</b> records the whole run, reasoning and tool calls, for the self-improving loop. See <code>.rules/harness-and-memory.md</code>.</p>
 <div class="flow">
 <div class="node">You type a prompt</div><div class="arrow">&rarr;</div>
-<div class="node">Hook: <code>userPromptSubmitted</code><br><small>logs your words</small></div><div class="arrow">&rarr;</div>
-<div class="node">Agent reads rules and skills, uses tools</div><div class="arrow">&rarr;</div>
-<div class="node">Hook: <code>postToolUse</code><br><small>logs the action, spots deliverables</small></div><div class="arrow">&rarr;</div>
-<div class="node">Hook: <code>sessionEnd</code><br><small>writes meta, history</small></div>
+<div class="node">Agent reads rules and skills, reasons, uses tools</div><div class="arrow">&rarr;</div>
+<div class="node">Harness trajectory<br><small>reasoning + every tool call</small></div><div class="arrow">&rarr;</div>
+<div class="node"><code>trajectory_distill</code><br><small>all reasoning, then the gaps</small></div><div class="arrow">&rarr;</div>
+<div class="node"><code>skill_factory/feedback.md</code><br><small>the loop closes</small></div>
 </div>
-<h3>The hooks</h3>
+<h3>The trajectory, not hooks</h3>
+<p>The old session hooks are removed. They only logged prompts and tool calls, never the model's reasoning. The DeepSeek Harness (<code>deepseek-ai/deepseek-harness</code>) already records the whole run as a replayable trajectory: every reasoning step, every tool call, every result <b class="b b4" title="confidence 4 of 5">4</b>.</p>
 <div class="tablewrap"><table>
-<tr><th>Event</th><th>Script</th><th>Writes</th></tr>
-<tr><td><code>sessionStart</code></td><td><code>study_os_hook.py</code></td><td>session folder, <code>meta.json</code></td></tr>
-<tr><td><code>userPromptSubmitted</code></td><td><code>study_os_hook.py</code><br><code>log_user_inputs.py</code></td><td><code>prompts.md</code><br><code>inputs.md</code>, <code>inputs.jsonl</code> (your words, verbatim)</td></tr>
-<tr><td><code>postToolUse</code></td><td><code>study_os_hook.py</code><br><code>log_deliverables.py</code></td><td><code>actions.md</code>, <code>events.jsonl</code><br><code>deliverables.md</code>, per-topic <code>HISTORY.md</code></td></tr>
-<tr><td><code>errorOccurred</code></td><td><code>study_os_hook.py</code></td><td>error line in the session log</td></tr>
-<tr><td><code>sessionEnd</code></td><td>both scripts</td><td>final meta, deliverable summary</td></tr>
-<tr><td><code>userPromptSubmitted</code><br><code>sessionEnd</code></td><td><code>best_highlights.py</code></td><td><code>best highlights.txt</code> in that session folder. Same file name every time.</td></tr>
+<tr><th>Step</th><th>What does it</th><th>Produces</th></tr>
+<tr><td>Run the session</td><td>the harness</td><td>the trajectory (reasoning + tool calls)</td></tr>
+<tr><td>Export it</td><td>harness "Download session log"</td><td><code>Artifacts/sessions/&lt;...&gt;/trajectory.json</code></td></tr>
+<tr><td>Distill it</td><td><code>trajectory_distill</code></td><td><code>reasoning_all.html</code>, <code>reasoning_gaps.html</code>, email</td></tr>
+<tr><td>File the run</td><td><code>harness_clerk</code></td><td><code>deliverables.md</code>, per-topic <code>HISTORY.md</code></td></tr>
 </table></div>
-<p>Each script reads one JSON payload on stdin, writes files, and always exits 0. A failure goes to <code>hook_errors.log</code>. It never blocks the agent <b class="b b5" title="confidence 5 of 5">5</b>.</p>
-<p>The layout code is in <code>skills/scripts/hooks/paths.py</code>. Change a path there, in one place.</p>
-<details class="warn"><summary>Status: not yet confirmed in the app <b class="b b2" title="confidence 2 of 5">2</b></summary>
-<p>Run by hand, all three scripts work. Inside the app, the log folders stayed empty. The likely cause: the docs load repository hooks from <code>.github/hooks/*.json</code> in the repository root <b class="b b5" title="confidence 5 of 5">5</b>, and this folder is not a git repository <b class="b b4" title="confidence 4 of 5">4</b>. Two fixes to try:</p>
-<ol><li>Run <code>git init</code> in the folder, then start a new session.</li>
-<li>Copy <code>study-os.json</code> to <code>%USERPROFILE%\.copilot\hooks\</code>. The docs list this user-level path <b class="b b5" title="confidence 5 of 5">5</b>. Change the <code>cwd</code> to the full folder path.</li></ol>
-<p>Hooks see prompts and tool calls. They do not see the model's reasoning <b class="b b3" title="confidence 3 of 5">3</b>. For reasoning, read the session export <code>~/.copilot/session-state/&amp;lt;id&amp;gt;/events.jsonl</code>. An exporter for that is not built.</p></details>
+<p>Memory has three levels: the trajectory (raw, per run), <code>claude-mem</code> (<code>thedotmack/claude-mem</code>, optional runtime recall across sessions), and <code>llm_wiki/</code> (the curated knowledge that compounds). See <code>.rules/harness-and-memory.md</code>.</p>
 <h3>Where files go</h3>
 <div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>Artifacts/
   artifacts/
     &lt;topic_slug&gt;/                  no dates in names
       phase1_map.html              deliverable (HTML)
       phase1_mindmap.json          source beside it
-      HISTORY.md                   hook-written, dated lines inside
+      HISTORY.md                   clerk-written, dated lines inside
     &lt;group&gt;/&lt;topic_slug&gt;/          related topics share a group
     _groups.json                   group -&gt; topics
   sessions/
@@ -117,7 +110,7 @@ python skills/scripts/repo_map.py --check   # must print OK</pre></div>
 
 <section id="extend"><h2>5. How to extend it</h2>
 <div class="tabs" id="tabs">
-<button class="on" data-t="t1">Add a misc skill</button><button data-t="t2">Add a phase skill</button><button data-t="t3">Add a hook</button><button data-t="t4">Add a rule</button></div>
+<button class="on" data-t="t1">Add a misc skill</button><button data-t="t2">Add a phase skill</button><button data-t="t3">Run the self-improvement pass</button><button data-t="t4">Add a rule</button></div>
 <div class="pane on" id="t1">
 <p>Misc holds tools that do not belong to one phase. Use <code>/skill_creator</code>. It follows <code>.rules/skill-authoring.md</code>.</p>
 <ol><li>Say what the skill does and the words you will use to call it.</li>
@@ -138,16 +131,14 @@ effort: medium
 <p class="note">The open spec uses hyphens in names <b class="b b5" title="confidence 5 of 5">5</b>. To upload a skill to claude.ai, rename it first.</p></div>
 <div class="pane" id="t2"><p>Put it in <code>skills/phase_N/skills/&lt;name&gt;/</code>. Same format. Name the input file and the output file in the body. Add the file to the phase <code>PATHS.md</code>. Phase skills read the earlier phase's output, so keep the file names stable.</p></div>
 <div class="pane" id="t3">
-<p>A hook is a small script. The agent starts it at a lifecycle event and passes JSON on stdin <b class="b b5" title="confidence 5 of 5">5</b>.</p>
-<ol><li>Copy <code>log_user_inputs.py</code> as a start. Import <code>paths.py</code> for the layout.</li>
-<li>Read the payload. Write your file. Catch every error. Exit 0.</li>
-<li>Add an entry under the event in <code>.github/hooks/study-os.json</code>.</li>
-<li>Test by hand, then in a new session.</li></ol>
-<div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>{ &quot;type&quot;: &quot;command&quot;,
-  &quot;powershell&quot;: &quot;python skills/scripts/hooks/my_hook.py postToolUse&quot;,
-  &quot;cwd&quot;: &quot;.&quot;, &quot;timeoutSec&quot;: 10 }</pre></div>
-<div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>echo {&quot;prompt&quot;:&quot;test&quot;} | python skills/scripts/hooks/log_user_inputs.py userPromptSubmitted</pre></div>
-<p>When one event has many entries, all of them run <b class="b b5" title="confidence 5 of 5">5</b>. On Windows use the <code>powershell</code> field. The cloud agent honours only <code>bash</code> or <code>command</code> and drops files when the job ends <b class="b b5" title="confidence 5 of 5">5</b>. Keep hooks fast: the timeout is 10 seconds here.</p></div>
+<p>The self-improvement pass turns a finished run into skill fixes. No hooks: the harness trajectory already holds the reasoning and the tool calls.</p>
+<ol><li>In the harness, open the run's <b>Trajectory</b> tab and choose <b>Download session log</b>. Save it under <code>Artifacts/sessions/&lt;...&gt;/trajectory.json</code>.</li>
+<li>Run the distiller. It writes all-reasoning HTML and a machine list.</li>
+<li>Read the gaps against the skill the run followed. Write <code>reasoning_gaps.html</code>. File each gap to <code>skill_factory/feedback.md</code>.</li>
+<li>Email both files when you want them (set up once per <code>skills/self_improve/trajectory_distill/references/email-setup.md</code>).</li></ol>
+<div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>python skills/self_improve/trajectory_distill/scripts/distill.py Artifacts/sessions/&lt;...&gt;/trajectory.json out/</pre></div>
+<div class="pre"><button class="cp" onclick="cp(this)">copy</button><pre>python skills/scripts/send_notes_email.py --subject "trajectory distill" --body "all, then gaps" out/reasoning_all.html out/reasoning_gaps.html</pre></div>
+<p>The credential for the email lives only in the env file, never in the repo or the chat <b class="b b5" title="confidence 5 of 5">5</b>. Full steps: <code>/trajectory_distill</code>.</p></div>
 <div class="pane" id="t4"><p>Add one short file to <code>.rules/</code>. One topic. Numbered lines. Say the source and its score. Then add a pointer line in <code>AGENTS.md</code> and run the repo map. Rules beat skill text when they disagree.</p></div>
 </section>
 
@@ -164,8 +155,8 @@ effort: medium
 <div class="cases">
 <details open><summary>Learn a topic from zero</summary><p>Example: audit a cloud case with no cloud background. Drop the case in <code>user-input-learning-text/</code>. Run phase 1 for a map. Study from the map. Move to phase 2 only for the notes you want to keep.</p></details>
 <details><summary>Learn from a book, video or course</summary><p>Run the extraction intake first, then <code>map_maker</code> in book or video mode. The map adapts to the mode. It does not copy the audit layout point for point. Examples are in <code>map_maker/references/examples/</code>.</p></details>
-<details><summary>Review how you work with the AI</summary><p>Run <code>/learn_from_sessions</code> every week or so. It reads the logs and writes a short report in <code>Artifacts/artifacts/</code>. It suggests new skills or changes to old ones. It needs working hooks.</p></details>
-<details><summary>Learn from an expert's logs</summary><p>If an experienced colleague agrees in writing, their hook logs can show how they steer the AI. You then rebuild their result as a study topic. Follow <code>WORKFLOW_EXPERT_CAPTURE.md</code>. The consent gate is not optional: opt-in, alias only, redaction, no use in performance reviews. The capture skill is not built yet.</p></details>
+<details><summary>Review how you work with the AI</summary><p>Run <code>/learn_from_sessions</code> every week or so. It reads the harness trajectory exports and writes a short report in <code>Artifacts/artifacts/</code>. It suggests new skills or changes to old ones.</p></details>
+<details><summary>Learn from an expert's logs</summary><p>If an experienced colleague agrees in writing, their trajectory exports can show how they steer the AI. You then rebuild their result as a study topic. Follow <code>WORKFLOW_EXPERT_CAPTURE.md</code>. The consent gate is not optional: opt-in, alias only, redaction, no use in performance reviews. The capture skill is not built yet.</p></details>
 <details><summary>Keep the folder clean</summary><p>Run <code>/tidy</code>. Related topics share a group folder via <code>_groups.json</code>, for example ten AWS topics under one case name.</p></details>
 <details><summary>Make your own skill</summary><p>Run <code>/skill_creator</code>. See section 5.</p></details>
 </div></section>
@@ -183,7 +174,7 @@ effort: medium
 
 <section id="fix"><h2>8. Problems</h2>
 <div class="tablewrap"><table><tr><th>Problem</th><th>Try</th></tr>
-<tr><td>No session logs appear</td><td>See the warning in section 3. Check <code>hook_errors.log</code> under <code>Artifacts/sessions/</code>.</td></tr>
+<tr><td>No session logs appear</td><td>Export the run from the harness Trajectory tab ("Download session log") into <code>Artifacts/sessions/</code>.</td></tr>
 <tr><td>Skill does not trigger</td><td>Add the words you really type to the description. Run the validator.</td></tr>
 <tr><td>Repo map check fails</td><td>Run <code>python skills/scripts/repo_map.py</code>. Then <code>--check</code>.</td></tr>
 <tr><td>Mind map hash changed</td><td>The input JSON changed. Build twice and compare. The builder does this.</td></tr>
@@ -192,13 +183,13 @@ effort: medium
 
 <section id="refs"><h2>References</h2>
 <ol class="refs">
-<li>GitHub Docs. <i>GitHub Copilot hooks reference</i>. <a href="https://docs.github.com/en/copilot/reference/hooks-reference">docs.github.com/en/copilot/reference/hooks-reference</a>. Sections: Hooks locations, Cloud agent execution environment. Accessed 2026-10-06. <em>official</em>.</li>
+<li>DeepSeek. <i>DeepSeek Harness (dsh)</i>. <a href="https://github.com/deepseek-ai/deepseek-harness">github.com/deepseek-ai/deepseek-harness</a>. The runtime and its trajectory. Accessed 2026-10-25. <em>third-party write-ups, grade 4</em>. Memory plugin: <a href="https://github.com/thedotmack/claude-mem">github.com/thedotmack/claude-mem</a>.</li>
 <li>Agent Skills. <i>Specification</i>. <a href="https://agentskills.io/specification">agentskills.io/specification</a>. Sections: Frontmatter, Progressive disclosure. Accessed 2026-10-06. <em>official</em>.</li>
 <li>Anthropic. <i>Extend Claude with skills</i>. <a href="https://code.claude.com/docs/en/skills">code.claude.com/docs/en/skills</a>. Sections: Frontmatter reference, Run skills in a subagent. Accessed 2026-10-06. <em>official</em>.</li>
 <li>Anthropic. <i>skill-creator</i>, commit 683bc88. <a href="https://github.com/anthropics/skills/tree/main/skills/skill-creator">github.com/anthropics/skills</a>. Accessed 2026-10-06. <em>primary</em>.</li>
-<li>This folder: <code>REPO_MAP.md</code>, <code>.github/hooks/study-os.json</code>, <code>.rules/</code>, <code>WORKFLOW_*.md</code>. Opened 2026-10-06. <em>case</em>.</li>
+<li>This folder: <code>REPO_MAP.md</code>, <code>.rules/harness-and-memory.md</code>, <code>.rules/</code>, <code>WORKFLOW_*.md</code>. Opened 2026-10-25. <em>case</em>.</li>
 </ol>
-<p class="note">Scores marked 5 for facts about the docs come from pages opened for this page [1 to 4]. Facts about this folder come from [5]. The scores 2 to 4 mark what was not verified: the hooks have not been seen running in the app.</p></section>
+<p class="note">Scores marked 5 for facts about the docs come from pages opened for this page [2 to 4]. Facts about this folder come from [5]. The harness and memory facts [1] are graded 3 to 4: only third-party write-ups were opened, not the official repos.</p></section>
 </main><script>
 function cp(b){navigator.clipboard.writeText(b.nextElementSibling.innerText);b.textContent='copied';setTimeout(()=>b.textContent='copy',1200)}
 function flt(){var q=document.getElementById('q').value.toLowerCase();document.querySelectorAll('#sk tr').forEach((r,i)=>{if(i)r.style.display=r.innerText.toLowerCase().includes(q)?'':'none'})}
