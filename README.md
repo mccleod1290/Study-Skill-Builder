@@ -24,6 +24,14 @@ This repo is the **skeleton**: phases, skills, rules, the agents, and a self-imp
 
 A lab solved by copying the walkthrough is logged as *exposure*, not *solved*. That one rule is the whole philosophy: the system refuses to let you fool yourself.
 
+## The illusion of competence
+
+The illusion of competence is real, and this system is built to break it. It is so easy to think you understood something just from exposure. Everyone has seen a ZIP file; far fewer can explain how the compression actually works. Seeing a thing is not understanding its mechanics.
+
+> "You can outsource your thinking, but you can't outsource your understanding."
+
+That line is [kache's (@yacineMTB)](https://x.com/yacineMTB), a point [Andrej Karpathy](https://x.com/karpathy) has cited often. It is the whole reason this OS exists. You can hand the thinking to an agent, a video, a walkthrough — but the understanding, the why and the mechanics and the failure modes, is the part no one can hand you. So the system never lets the final answer stand in for the understanding: it makes you (or the agent) explain the mechanics, get tested on them, and build the thing. Those are the parts you cannot outsource.
+
 ## The loop
 
 ```text
@@ -104,6 +112,30 @@ Three levels of memory, from raw to refined:
 
 The self-improvement pass can email the two HTML files. The script reads your SMTP settings from a local env file **outside the repo** — a Gmail app password goes in `~/.config/study-os/smtp.env`, never in the code, the repo, or a chat. Setup: `skills/self_improve/trajectory_distill/references/email-setup.md`.
 
+## Tips and tricks: get the most from what you learn
+
+Not a secret — take it and use it. These are the habits that turn knowledge into skill, for a human or an agent.
+
+**1. Run the self-improvement pass on every real session.** After a run, export the trajectory from the harness (Trajectory tab -> "Download session log") and distill it: one file of all the reasoning, one of the reasoning and tool use the run did that your skill never taught. The second file is your next lesson.
+
+![Download the session log from the harness Trajectory tab](docs/download-session-log.png)
+
+**2. Read your own reasoning, not just the answer.** The trajectory shows how you (or the agent) actually thought — the dead ends and the pivots ("web search is broken, I'll try Bing instead"). The skill lives in those turns, not in the clean final output. This is the part exposure can never give you.
+
+![The trajectory shows every reasoning step, not just the result](docs/trajectory-reasoning.png)
+
+**3. Capture the tool sequence as a checklist.** The order of reads and commands *is* the method. Lift it out of the trajectory and make it a runnable skill with a lab and a test — so next time you run the method, not your memory of it.
+
+![Every tool call is recorded in order, so the method is reviewable](docs/trajectory-tool-calls.png)
+
+**4. Turn recurring gaps into skills, not notes.** A gap that shows up twice is a missing skill. Send it to the factory (`skill_smith`): guide, script, checklist, lab, verification test. Knowledge you cannot run is still just exposure.
+
+**5. Grade yourself honestly.** `exposure` vs `solved`. If you needed the walkthrough, it is exposure. Write it down as exposure and come back to it.
+
+**6. Feed the wiki and link everything.** Each run's new concepts and distilled gaps go into `llm_wiki/` with wikilinks, so your knowledge compounds instead of scattering across old chats.
+
+**7. Ask for depth, not size.** When you go back to a topic, ask for "a deeper version of this task, not a bigger one" — the raw data, the real tools, the first principles. That is the depth agent's whole job.
+
 ## Keep your fork private-safe
 
 If you keep a private full copy and publish only the skeleton, use the export script. It copies an allowlist, scrubs, rebuilds the map, then scans for private matches (emails, home paths, key patterns, and any term you list in a local `.export_private.json`). It exits 1 on any match.
@@ -124,6 +156,7 @@ People and work this system is built on:
 - **Agent Skills specification**: https://agentskills.io/specification. **Claude Code skills docs**: https://code.claude.com/docs/en/skills
 - **Nick Saraev**: the study method behind the phases. His talk suggests about ten agents for learning, which this system splits across the four phases (map, learn, exam, feedback). https://youtu.be/FSXHk4hMrY8
 - **Andrej Karpathy**: the writing style, prose edited at the level of its structure like an AST, not line by line. https://x.com/karpathy/status/2105819303471976479
+- **kache (@yacineMTB)**, cited by **Andrej Karpathy**: "you can outsource your thinking, but not your understanding" — the line behind the whole system. https://x.com/yacineMTB
 - **3Blue1Brown and the manim community**: the explainer video style. https://docs.manim.community
 - **Diagram tools**: diagram-design (https://github.com/cathrynlavery/diagram-design), anatomy (https://github.com/wheresryan22/anatomy), archify (https://github.com/tt-a1i/archify).
 - **ASD-STE100 Simplified Technical English**: the plain writing rule. https://www.asd-ste100.org/
