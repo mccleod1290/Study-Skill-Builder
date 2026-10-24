@@ -1,0 +1,14 @@
+# Study-Skill-Builder is the public skeleton. Private knowledge never lands here.
+/llm_wiki/
+/skill_factory/
+/Artifacts/
+/user-input-learning-text/
+.export_private.json
+.obsidian/
+
+__pycache__/
+*.pyc
+*.mp4
+*.mp3
+.env
+*.env

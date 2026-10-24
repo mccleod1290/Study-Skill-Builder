@@ -1,0 +1,15 @@
+# Rule: brevity is the wit of the soul
+
+HTML is allowed to be rich. It is not allowed to be long.
+
+1. Budget: a deliverable prints to 5 pages at most when it is a lesson, and 10 pages at most when it is a reference or an exam. Lower is better. Aim for the low end. 5 to 10 is the ceiling, not the target.
+2. Measure in words, not pages, so the check is the same every run: 1 page = 500 words of visible text. Lesson ceiling 2500 words. Reference or exam ceiling 5000 words. Code blocks count at half.
+3. Interactive layers (collapsed cards, tabs, mind map nodes, quiz items) count only when visible text is rendered into them. Hiding text in a fold does not exempt it. If it would not fit printed, it is too long.
+4. Over the ceiling: cut, do not shrink the font. Cut in this order: repetition, history, second examples, hedging, then side topics. Move a side topic to its own artifact and link it.
+5. Brevity never beats grounding. Keep the citation and the 1 to 5 score on every claim. Cut words around them.
+6. Say it once. One idea gets one sentence, one example, one source.
+7. The mind map is the exception on node count, not on words: each node's text stays short (a title plus at most 40 words).
+8. Every deliverable shows its word count and page estimate at the top, next to the confidence tally. Over budget needs a one-line reason, and he decides.
+9. The paradox is the point: rich medium, small content. When in doubt, cut.
+10. Per sub heading, not per topic (set by him on 2026-10-12). A study page has sub headings (the domains of the map). Each sub heading has 5 to 9 sub topics. The ceiling in rule 2 (2500 words, 5 pages, code at half) applies to each sub heading on its own. The whole page, with all its sub headings together, has no ceiling. A sub topic has no ceiling of its own: it lives inside its sub heading's budget. Show the word count per sub heading at the top, next to the confidence tally. A single lesson with no sub headings still has the 2500 word ceiling.
+11. Multi topic, multi concept: no word limit (set by him on 2026-10-24). A page that covers several topics or concepts (a whole domain, several competencies, several certs, a one-shot page) has no word ceiling, not per page and not per sub heading. The word limit applies only to a single-topic page. Completeness comes first: never cut a node, a condition or a source to save words. Rule 6 still holds: no filler, say it once. Mark the HTML `<meta name="twin-budget" content="multi">` so the checkers skip the count. This rule wins over rules 1, 2 and 10 for such pages.
