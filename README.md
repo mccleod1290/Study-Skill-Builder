@@ -1,165 +1,178 @@
 # Study-Skill-Builder
 
-**A learning operating system for humans and AI agents — built to kill passive learning.**
+**A learning operating system for people and AI agents. It stops passive learning.**
 
-Most study today is passive. You watch the video, read the page, copy the solution, and nod along. It feels like learning. It is not. You remember having seen it, not how it works, and you cannot do it when it counts. Exposure is not skill.
+Most study is passive. You watch a video. You read a page. You copy a solution. You feel that you learned. You did not. You remember that you saw it. You cannot do it when it counts. Exposure is not skill.
 
-This OS forces the opposite. Whether a **person** runs it by hand or an **AI agent** runs it for you, the same loop makes you do the active moves that actually build a skill: map the thing first, explain it from first principles, get tested until a gap has a name, build the real thing on a real target, then find what you still missed and close it. Same discipline for a human and for an agent — because the way you beat passive learning is the same for both.
+This system makes you do the opposite. A person runs it by hand. An agent runs it for you. The steps are the same. You map the topic. You explain it from first principles. You take a test until a gap has a name. You build the real thing on a real target. You find what you missed, and you close it. The way to beat passive learning is one way, for a person and for an agent.
 
-It carries four study phases, a research skill, three ambition agents (depth, range, altitude), a private LLM wiki, and a skill factory that turns what you learn into runnable skills. Built for security study (web pentest, cloud, AI security); it works for any field.
+Inside are four study phases, a research skill, three agents (depth, range, altitude), a private wiki, and a skill factory. It was built for security study: web pentest, cloud, and AI security. It works for any field.
 
-This repo is the **skeleton**: phases, skills, rules, the agents, and a self-improving loop. Your knowledge stays on your machine. The LLM wiki, the skills the factory builds, and every study artifact are private by design and never live here.
+This repository is the skeleton. It holds the phases, the skills, the rules, the agents, and the self-improving loop. Your knowledge stays on your machine. The wiki, the built skills, and every study artifact are private. They never live here.
 
 ![Study-Skill-Builder architecture](docs/architecture.webp)
 
+## The loop
+
+```mermaid
+flowchart TD
+  A["Study-OS: phases 1 to 4 and the research skill"] -->|"study and extract"| B["LLM wiki, private"]
+  B -->|"knowledge source"| C["Depth, Range, Altitude agents"]
+  C -->|"skill candidates"| D["Skill factory"]
+  D -->|"runnable skills"| E["Real use: labs, CTFs, bounty, work"]
+  E -->|"harness trajectory"| F["trajectory_distill: all reasoning, then gaps"]
+  F -->|"gaps as feedback"| A
+```
+
+The loop closes on the harness trajectory. The runtime is the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). It records each run: the model's reasoning and every tool call. `trajectory_distill` reads the export. It writes one file of all the reasoning. It writes a second file of the reasoning and tool use that the skill did not cover. It mails both. It files the gaps as feedback. The skills improve from real runs, not from guesses.
+
 ## Passive in, active out
 
-| passive habit it replaces | the active move it forces | who does it |
-|---|---|---|
-| watching a video, reading a chapter | **map** the parts, the dependencies, the stuck points before any explaining (phase 1) | human or agent |
-| highlighting and re-reading | **explain** from first principles, every claim cited and graded (phase 2) | human or agent |
-| nodding along, feeling sure | **get tested** — a Socratic spar and an exam until a real gap has a name (phase 3) | human or agent |
-| copying the solution | **build** it on a real lab, CTF, bounty or work target | human or agent |
-| moving on and forgetting | **diagnose** the shared root of repeated misses, then loop back (phase 4) | human or agent |
+Each phase removes one passive habit. It puts an active move in its place. The move is the same for a person and for an agent.
 
-A lab solved by copying the walkthrough is logged as *exposure*, not *solved*. That one rule is the whole philosophy: the system refuses to let you fool yourself.
+| passive habit | active move | phase |
+|---|---|---|
+| watch a video, read a chapter | map the parts, the dependencies, and the stuck points | phase 1 |
+| highlight and re-read | explain from first principles; cite and grade each claim | phase 2 |
+| nod along, feel sure | take a Socratic spar and an exam until a gap has a name | phase 3 |
+| copy the solution | build it on a real lab, CTF, bounty, or work target | the real use |
+| move on and forget | find the shared root of repeated misses, then loop back | phase 4 |
+
+```mermaid
+flowchart LR
+  P1["Phase 1: map"] --> P2["Phase 2: explain"] --> P3["Phase 3: test"] --> P4["Phase 4: diagnose"]
+  P4 -->|"gap found"| P1
+```
+
+A lab solved by copying the walkthrough is logged as `exposure`, not `solved`. This one rule is the whole method. The system does not let you fool yourself.
 
 ## The illusion of competence
 
-The illusion of competence is real, and this system is built to break it. It is so easy to think you understood something just from exposure. Everyone has seen a ZIP file; far fewer can explain how the compression actually works. Seeing a thing is not understanding its mechanics.
+The illusion of competence is real. This system breaks it. It is easy to think you understood a thing from exposure alone. Everyone has seen a ZIP file. Few can explain how the compression works. To see a thing is not to understand it.
 
 > "You can outsource your thinking, but you can't outsource your understanding."
 
-That line is [kache's (@yacineMTB)](https://x.com/yacineMTB), a point [Andrej Karpathy](https://x.com/karpathy) has cited often. It is the whole reason this OS exists. You can hand the thinking to an agent, a video, a walkthrough — but the understanding, the why and the mechanics and the failure modes, is the part no one can hand you. So the system never lets the final answer stand in for the understanding: it makes you (or the agent) explain the mechanics, get tested on them, and build the thing. Those are the parts you cannot outsource.
-
-## The loop
-
-```text
-Study-OS phases 1-4 + research-skill  --study, practice, research, extract-->  LLM wiki (private)
-LLM wiki                          --knowledge source-->                     depth | range | altitude agents
-the three agents                  --skill candidates-->                     skill factory
-skill factory                     --runnable skills (private)-->            labs, CTFs, bug bounty, work
-real-world use                    --harness trajectory-->                    trajectory_distill (all reasoning, then gaps)
-the gaps                          --execution feedback-->                    backlog and roadmap --> Study-OS
-```
-
-The loop closes on the **harness trajectory**. The runtime (the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)) records every run: the model's reasoning and every tool call. `trajectory_distill` reads that export, writes one HTML of all the reasoning and one of the reasoning and tool use the run did that the skill did not cover, emails both, and files the gaps back as feedback. So the skills improve from real runs, not from guesses.
+That line is [kache's (@yacineMTB)](https://x.com/yacineMTB). [Andrej Karpathy](https://x.com/karpathy) cites it often. It is the reason this system exists. You can give the thinking to an agent, a video, or a walkthrough. You cannot give away the understanding. The why, the mechanics, and the failure modes stay with you. So the system never lets the final answer stand for the understanding. It makes you explain the mechanics, take a test, and build the thing. These are the parts you cannot outsource.
 
 ## What is inside
 
-| part | where | does |
+| part | where | what it does |
 |---|---|---|
-| Phase 1: map | `skills/phase_1/` | interview the learner, freeze the context, map the parts, dependencies and stuck points |
-| Phase 2: page | `skills/phase_2/` | one study page from the map, first principles first, then a judge in its own window, then diagrams, an interactive page, an explainer video |
-| Phase 3: test | `skills/phase_3/` | Socratic spar, academic papers, a practical build |
-| Phase 4: diagnose | `skills/phase_4/` | find the shared root of repeated misses, route back to the right phase |
-| Research skill | `research-skill/` (submodule) | searches, explores and brings in external resources (blogs, papers, tools, videos) that feed the wiki. Lives in [mccleod1290/Research-Skill](https://github.com/mccleod1290/Research-Skill) |
+| Phase 1: map | `skills/phase_1/` | interviews the learner, freezes the context, maps the parts, the dependencies, and the stuck points |
+| Phase 2: explain | `skills/phase_2/` | writes one study page from the map. first principles first. then a judge, diagrams, an interactive page, and a video |
+| Phase 3: test | `skills/phase_3/` | runs a Socratic spar, three papers, and a practical build |
+| Phase 4: diagnose | `skills/phase_4/` | finds the shared root of repeated misses, then routes back to the right phase |
+| Research skill | `research-skill/` (submodule) | searches and brings in outside resources that feed the wiki. lives in [mccleod1290/Research-Skill](https://github.com/mccleod1290/Research-Skill) |
 | Three agents | `.agents/` | `depth_agent`, `range_agent`, `altitude_agent` |
-| LLM wiki skills | `skills/wiki/` | `SCHEMA.md` plus `wiki_ingest`, `wiki_query`, `wiki_lint` |
-| Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): wiki page syntax, bases, canvas, CLI, clean web capture |
-| Skill factory | `skills/skill_factory/skill_smith/` | turns agent output into a guide, scripts, a checklist, a lab and a verification test |
-| Self-improving loop | `skills/self_improve/trajectory_distill/` | reads a harness trajectory export; writes all-reasoning and gaps HTML; emails both; files gaps to feedback |
+| LLM wiki skills | `skills/wiki/` | `SCHEMA.md`, `wiki_ingest`, `wiki_query`, `wiki_lint` |
+| Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): page syntax, bases, canvas, CLI, clean web capture |
+| Skill factory | `skills/skill_factory/skill_smith/` | turns agent output into a guide, scripts, a checklist, a lab, and a test |
+| Self-improving loop | `skills/self_improve/trajectory_distill/` | reads a trajectory export, writes two HTML files, mails them, files gaps |
 | House skills | `skills/misc/` | `skill_creator`, `karpathy_agents_md`, `learn_from_sessions` |
-| Rules | `.rules/` | grounding and confidence grades, brevity, HTML deliverables, context isolation, phase order, skill authoring, visuals |
-| Map | `REPO_MAP.md` | where everything is. regenerate with `python skills/scripts/repo_map.py` |
+| Rules | `.rules/` | grounding, brevity, HTML output, context isolation, phase order, skill authoring, visuals |
+| Map | `REPO_MAP.md` | where everything lives. rebuild it with `python skills/scripts/repo_map.py` |
 
 ## The three agents
 
-From Felix Rieseberg's four directions of ambition (speed, altitude, depth, range). Speed is a given, so each of the other three is an agent.
+The source is Felix Rieseberg's four directions of ambition: speed, altitude, depth, and range. Speed is a given. Each of the other three is an agent.
 
-- **Depth agent.** Works as a field-leading expert would: raw data, real tools, first principles, an outside check. It asks for "a deeper version of this task, not a bigger one". Output: in-depth guides, prerequisites, mental models, comparisons.
-- **Range agent.** Turns nouns into verbs to find which fields apply. Brings a small crew of perspectives plus a red team, each as its own subagent. Output: cross-topic maps, use cases, patterns, variants.
-- **Altitude agent.** Works at the level of outcomes: the goal beyond the goal, the urgent decisions, a workflow redesign that runs with little input. Output: workflows, playbooks, pipelines, project plans, the roadmap.
+- **Depth agent.** It works as a field expert works: raw data, real tools, first principles, and an outside check. It asks for a deeper version of a task, not a bigger one. It writes guides, prerequisites, mental models, and comparisons.
+- **Range agent.** It turns the nouns into verbs to find which fields apply. It brings a small crew of views and a red team. Each view is its own subagent. It writes cross-topic maps, use cases, patterns, and variants.
+- **Altitude agent.** It works at the level of outcomes: the goal behind the goal, the urgent decisions, and a workflow that runs with little input. It writes workflows, playbooks, pipelines, and plans.
 
-Shared rules: each agent runs in its own context window, no agent grades its own work, and every agent does the work of a role instead of role-playing it.
+Three rules bind all of them. Each agent runs in its own context window. No agent grades its own work. Each agent does the work of a role. It does not play the role.
 
 ## The private layers
 
-| layer | folder (created locally, never committed here) | built by |
+These layers hold your knowledge. The `.gitignore` blocks all of them. Keep your filled copy in a private repository.
+
+| layer | folder (local only, never committed here) | built by |
 |---|---|---|
-| LLM wiki | `llm_wiki/` with `raw/`, `wiki/{concepts,connections,mental_models,examples,sources}/`, `index.md`, `log.md` | `wiki_ingest` creates it on first run. open it in Obsidian as a vault |
+| LLM wiki | `llm_wiki/` with `raw/`, `wiki/`, `index.md`, `log.md` | `wiki_ingest` makes it on first run. open it in Obsidian |
 | Built skills | `skill_factory/inbox/`, `skill_factory/built/`, `skill_factory/feedback.md` | the three agents and `skill_smith` |
 | Study output | `Artifacts/` | the phases |
 | Your sources | `user-input-learning-text/` | you. read only |
 
-`.gitignore` blocks all four. Keep your filled-in copy in a private repo.
-
 ## Quick start
 
-1. Clone the repo **with submodules** (the research skill is one): `git clone --recursive <url>`, or after a plain clone run `git submodule update --init`. Open it with Claude Code, Codex, Copilot or any agent that reads `AGENTS.md` — or run the phases yourself by hand. A person and an agent follow the same steps.
+1. Clone with submodules. The research skill is a submodule. Run `git clone --recursive <url>`. After a plain clone, run `git submodule update --init`. Open the folder with Claude Code, Codex, the DeepSeek Harness, or any agent that reads `AGENTS.md`. You can also run the phases by hand. A person and an agent follow the same steps.
 2. Read `AGENTS.md`, then `REPO_MAP.md`.
-3. Copy the agents where your tool loads them, for example for Claude Code:
+3. Load the agents. For Claude Code:
 
    ```bash
    mkdir -p .claude/agents && cp .agents/*_agent.md .claude/agents/
    ```
 
-4. Study a topic: run phase 1 on a book chapter, a course or a case, then phase 2.
-5. File the result in your wiki: `/wiki_ingest`.
-6. Go deeper, wider or higher with the three agents. Turn their candidates into skills with `/skill_smith`.
-7. Use the skills in labs, CTFs, bug bounty or work.
-8. Close the loop: export the run from the harness (Trajectory tab, "Download session log") and run `/trajectory_distill`. It writes all-reasoning and gaps HTML, emails them, and files the gaps to `skill_factory/feedback.md`. Phase 4 and the altitude agent read it back into the roadmap.
+4. Study a topic. Run phase 1 on a chapter, a course, or a case. Then run phase 2.
+5. File the result in your wiki with `/wiki_ingest`.
+6. Go deeper, wider, or higher with the three agents. Turn their candidates into skills with `/skill_smith`.
+7. Use the skills in labs, CTFs, bounty, or work.
+8. Close the loop. Export the run from the harness Trajectory tab with "Download session log". Run `/trajectory_distill`. It writes the two HTML files, mails them, and files the gaps to `skill_factory/feedback.md`. Phase 4 and the altitude agent read the gaps back into the roadmap.
 
-## Memory and the harness
+## Memory
 
-Three levels of memory, from raw to refined:
+There are three levels of memory. They go from raw to refined.
 
-- **Trajectory** (per run, raw). The [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) records every run: reasoning and tool calls. It is the input to `trajectory_distill`. This replaces the old session hooks, which never captured reasoning.
-- **Runtime recall** (across sessions, optional). [claude-mem](https://github.com/thedotmack/claude-mem) keeps session memory in a local store. Use it where your client supports it.
-- **Curated knowledge** (long-lived). The LLM wiki (`llm_wiki/`, kept private). This is the one that compounds.
+| level | what it is | source |
+|---|---|---|
+| Trajectory | one run: the reasoning and every tool call | the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). it feeds `trajectory_distill` |
+| Runtime recall | memory across sessions, optional | [claude-mem](https://github.com/thedotmack/claude-mem). use it where your client supports it |
+| Curated knowledge | the refined, linked wiki | `llm_wiki/`, private. this one compounds |
+
+The old session hooks are gone. A hook never saw the reasoning. The trajectory does. So the trajectory replaced the hooks.
 
 ### Email
 
-The self-improvement pass can email the two HTML files. The script reads your SMTP settings from a local env file **outside the repo** — a Gmail app password goes in `~/.config/study-os/smtp.env`, never in the code, the repo, or a chat. Setup: `skills/self_improve/trajectory_distill/references/email-setup.md`.
+The self-improvement pass can mail the two HTML files. The script reads your SMTP settings from a local file outside the repository. Put a Gmail app password in `~/.config/study-os/smtp.env`. Do not put it in the code, the repository, or a chat. The steps are in `skills/self_improve/trajectory_distill/references/email-setup.md`.
 
 ## Tips and tricks: get the most from what you learn
 
-Not a secret — take it and use it. These are the habits that turn knowledge into skill, for a human or an agent.
+This is not a secret. Take it and use it. These habits turn knowledge into skill, for a person and for an agent.
 
-**1. Run the self-improvement pass on every real session.** After a run, export the trajectory from the harness (Trajectory tab -> "Download session log") and distill it: one file of all the reasoning, one of the reasoning and tool use the run did that your skill never taught. The second file is your next lesson.
+**1. Run the self-improvement pass on every real session.** Export the trajectory from the harness. Use the Trajectory tab, then "Download session log". Distill it. The first file holds all the reasoning. The second file holds the reasoning and tool use that your skill never taught. The second file is your next lesson.
 
 ![Download the session log from the harness Trajectory tab](docs/download-session-log.png)
 
-**2. Read your own reasoning, not just the answer.** The trajectory shows how you (or the agent) actually thought — the dead ends and the pivots ("web search is broken, I'll try Bing instead"). The skill lives in those turns, not in the clean final output. This is the part exposure can never give you.
+**2. Read your own reasoning, not the answer.** The trajectory shows how you thought. It shows the dead ends and the turns, for example "web search is broken, try Bing instead". The skill lives in those turns. The clean final answer does not hold it. Exposure cannot give you this.
 
-![The trajectory shows every reasoning step, not just the result](docs/trajectory-reasoning.png)
+![The trajectory shows each reasoning step, not only the result](docs/trajectory-reasoning.png)
 
-**3. Capture the tool sequence as a checklist.** The order of reads and commands *is* the method. Lift it out of the trajectory and make it a runnable skill with a lab and a test — so next time you run the method, not your memory of it.
+**3. Save the tool order as a checklist.** The order of the reads and the commands is the method. Lift it out of the trajectory. Make it a skill with a lab and a test. Next time you run the method, not your memory of it.
 
-![Every tool call is recorded in order, so the method is reviewable](docs/trajectory-tool-calls.png)
+![Each tool call is recorded in order, so the method is reviewable](docs/trajectory-tool-calls.png)
 
-**4. Turn recurring gaps into skills, not notes.** A gap that shows up twice is a missing skill. Send it to the factory (`skill_smith`): guide, script, checklist, lab, verification test. Knowledge you cannot run is still just exposure.
+**4. Turn a repeated gap into a skill, not a note.** A gap that shows up twice is a missing skill. Send it to the factory. The factory writes the guide, the script, the checklist, the lab, and the test. A skill you cannot run is still exposure.
 
-**5. Grade yourself honestly.** `exposure` vs `solved`. If you needed the walkthrough, it is exposure. Write it down as exposure and come back to it.
+**5. Grade yourself without mercy.** Mark each result `exposure` or `solved`. If you needed the walkthrough, it is `exposure`. Write `exposure`. Come back to it.
 
-**6. Feed the wiki and link everything.** Each run's new concepts and distilled gaps go into `llm_wiki/` with wikilinks, so your knowledge compounds instead of scattering across old chats.
+**6. Feed the wiki. Link every page.** Each run gives new concepts and distilled gaps. Put them in `llm_wiki/` with wikilinks. The knowledge then compounds. It does not scatter across old chats.
 
-**7. Ask for depth, not size.** When you go back to a topic, ask for "a deeper version of this task, not a bigger one" — the raw data, the real tools, the first principles. That is the depth agent's whole job.
+**7. Ask for depth, not size.** When you return to a topic, ask for a deeper version of the task, not a bigger one. Ask for the raw data, the real tools, and the first principles. This is the depth agent's job.
 
-**8. Set the whole thing up with one prompt.** You do not hand-configure this. Open the repo in an agent and tell it, in plain words, to set itself up — for example:
+**8. Set it all up with one prompt.** Do not configure it by hand. Open the repository in an agent. Tell it in plain words to set itself up. For example:
 
-> Read `AGENTS.md` and `REPO_MAP.md`. Copy the agents into `.claude/agents/`, initialise the `research-skill` submodule, create the `llm_wiki/` vault from `skills/wiki/SCHEMA.md`, and walk me through the email env file. Then confirm `python twin/check.py` (or `repo_map.py --check`) prints OK.
+> Read `AGENTS.md` and `REPO_MAP.md`. Copy the agents into `.claude/agents/`. Initialise the `research-skill` submodule. Make the `llm_wiki/` vault from `skills/wiki/SCHEMA.md`. Walk me through the email file. Then confirm `python twin/check.py` prints OK.
 
-The agent does the wiring. It **burns tokens, but it saves your time** — that is the trade this whole OS is built on: spend cheap model tokens so you spend your hours on learning and building, not on setup and note-keeping.
+The agent does the wiring. This burns tokens. It saves your time. That is the trade the system is built on. You spend cheap model tokens. You keep your hours for learning and building, not for setup and notes.
 
 ### Setup, by prompt or by hand
 
-Either let an agent do step 8, or do it yourself:
+Let an agent do step 8, or do it yourself.
 
-1. **Clone with submodules:** `git clone --recursive <this-repo>` (or `git submodule update --init` after a plain clone) — the research skill is a submodule.
-2. **Pick your runtime and read its install docs:**
-   - DeepSeek Harness (the runtime behind the trajectory loop) — install from its README: https://github.com/deepseek-ai/deepseek-harness
-   - or Claude Code — skills and agents docs: https://code.claude.com/docs/en/skills (the Agent Skills spec: https://agentskills.io/specification)
-3. **Load the agents:** `mkdir -p .claude/agents && cp .agents/*_agent.md .claude/agents/`.
-4. **Optional memory:** claude-mem, install per its README: https://github.com/thedotmack/claude-mem. Obsidian skills are vendored from https://github.com/kepano/obsidian-skills.
-5. **Email (optional):** follow `skills/self_improve/trajectory_distill/references/email-setup.md` to put a Gmail app password in a local env file (never in the repo).
-6. **Research skill:** maintained in its own repo, https://github.com/mccleod1290/Research-Skill.
+1. Clone with submodules. Run `git clone --recursive <this-repo>`. After a plain clone, run `git submodule update --init`.
+2. Pick a runtime. Read its install docs.
+   - DeepSeek Harness, the runtime behind the loop: https://github.com/deepseek-ai/deepseek-harness
+   - Claude Code, skills and agents: https://code.claude.com/docs/en/skills. The Agent Skills spec: https://agentskills.io/specification
+3. Load the agents. Run `mkdir -p .claude/agents && cp .agents/*_agent.md .claude/agents/`.
+4. Add memory, optional. claude-mem: https://github.com/thedotmack/claude-mem. The Obsidian skills come from https://github.com/kepano/obsidian-skills.
+5. Set up email, optional. Follow `skills/self_improve/trajectory_distill/references/email-setup.md`.
+6. The research skill lives in its own repository: https://github.com/mccleod1290/Research-Skill.
 
-Always check each project's own README or docs for the current install steps.
+Check each project's own README for the current steps.
 
 ## Keep your fork private-safe
 
-If you keep a private full copy and publish only the skeleton, use the export script. It copies an allowlist, scrubs, rebuilds the map, then scans for private matches (emails, home paths, key patterns, and any term you list in a local `.export_private.json`). It exits 1 on any match.
+You keep a private full copy. You publish only the skeleton. Use the export script. It copies an allowlist. It scrubs. It rebuilds the map. It scans for private strings: emails, home paths, key patterns, and any term in a local `.export_private.json`. It exits with an error on any match.
 
 ```bash
 python skills/scripts/export_public.py ../my-public-skeleton
@@ -169,30 +182,30 @@ python skills/scripts/export_public.py ../my-public-skeleton
 
 People and work this system is built on:
 
-- **Felix Rieseberg**: "How to be more ambitious: a tutorial for humans with models". The altitude, depth and range agents. https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/
-- **Andrej Karpathy**: the "LLM Wiki" pattern (raw sources, wiki, schema; ingest, query, lint). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-- **Andrej Karpathy**: coding-agent guidelines (think first, simplicity, surgical changes, goal-driven), via https://github.com/multica-ai/andrej-karpathy-skills, and the idea of diagrams, interactive pages and explainer videos as learning aids.
-- **Steph Ango (kepano)**: obsidian-skills, vendored in `skills/obsidian/` (MIT). https://github.com/kepano/obsidian-skills
-- **Anthropic**: skill-creator, adapted in `skills/misc/skill_creator/` (Apache 2.0). https://github.com/anthropics/skills/tree/main/skills/skill-creator
-- **Agent Skills specification**: https://agentskills.io/specification. **Claude Code skills docs**: https://code.claude.com/docs/en/skills
-- **Nick Saraev**: the study method behind the phases. His talk suggests about ten agents for learning, which this system splits across the four phases (map, learn, exam, feedback). https://youtu.be/FSXHk4hMrY8
-- **Andrej Karpathy**: the writing style, prose edited at the level of its structure like an AST, not line by line. https://x.com/karpathy/status/2105819303471976479
-- **kache (@yacineMTB)**, cited by **Andrej Karpathy**: "you can outsource your thinking, but not your understanding" — the line behind the whole system. https://x.com/yacineMTB
-- **3Blue1Brown and the manim community**: the explainer video style. https://docs.manim.community
-- **Diagram tools**: diagram-design (https://github.com/cathrynlavery/diagram-design), anatomy (https://github.com/wheresryan22/anatomy), archify (https://github.com/tt-a1i/archify).
-- **ASD-STE100 Simplified Technical English**: the plain writing rule. https://www.asd-ste100.org/
-- **DeepSeek Harness (dsh)**: the runtime whose trajectory feeds the self-improving loop. https://github.com/deepseek-ai/deepseek-harness
-- **Alex Newman (@thedotmack)**: claude-mem, the runtime memory option. https://github.com/thedotmack/claude-mem
-- **Geoffrey Huntley**: the Ralph loop technique, used to build this repo. https://ghuntley.com/ralph/
-- In Felix Rieseberg's post: Tom Kelley and Jonathan Littman (nouns to verbs), Locke and Latham (hard, specific goals).
+- **Felix Rieseberg.** "How to be more ambitious: a tutorial for humans with models." The source of the altitude, depth, and range agents. https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/
+- **Andrej Karpathy.** The LLM wiki pattern: raw sources, wiki, schema; ingest, query, lint. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- **Andrej Karpathy.** Coding-agent guidelines: think first, keep it simple, make surgical changes, drive by the goal. Via https://github.com/multica-ai/andrej-karpathy-skills. Also the use of diagrams, interactive pages, and explainer videos to learn.
+- **Andrej Karpathy.** The writing style: edit prose at the level of its structure, like an AST, not line by line. https://x.com/karpathy/status/2105819303471976479
+- **kache (@yacineMTB), cited by Andrej Karpathy.** "You can outsource your thinking, but not your understanding." The line behind the whole system. https://x.com/yacineMTB
+- **Steph Ango (kepano).** obsidian-skills, vendored in `skills/obsidian/` (MIT). https://github.com/kepano/obsidian-skills
+- **Anthropic.** skill-creator, adapted in `skills/misc/skill_creator/` (Apache 2.0). https://github.com/anthropics/skills/tree/main/skills/skill-creator
+- **Agent Skills specification.** https://agentskills.io/specification. Claude Code skills docs: https://code.claude.com/docs/en/skills
+- **Nick Saraev.** The study method behind the phases. His talk proposes about ten agents for learning. This system splits them across the four phases: map, learn, exam, feedback. https://youtu.be/FSXHk4hMrY8
+- **3Blue1Brown and the manim community.** The explainer video style. https://docs.manim.community
+- **Diagram tools.** diagram-design: https://github.com/cathrynlavery/diagram-design. anatomy: https://github.com/wheresryan22/anatomy. archify: https://github.com/tt-a1i/archify
+- **ASD-STE100 Simplified Technical English.** The plain writing rule. https://www.asd-ste100.org/
+- **DeepSeek Harness (dsh).** The runtime whose trajectory feeds the loop. https://github.com/deepseek-ai/deepseek-harness
+- **Alex Newman (@thedotmack).** claude-mem, the runtime memory option. https://github.com/thedotmack/claude-mem
+- **Geoffrey Huntley.** The Ralph loop, used to build this repository. https://ghuntley.com/ralph/
+- From Felix Rieseberg's post: Tom Kelley and Jonathan Littman (nouns to verbs), and Locke and Latham (hard, specific goals).
 
 ## The story, and thanks to failure
 
-This took a long time and a lot of failure. From late February through October I tried to build a study system that would teach me and get it right, and it kept not working. The thing I kept running into was my own passive learning: watching, reading, nodding, and still not being able to do the thing. So I built an OS that will not let me stay passive, and that an agent can run by the same rules. That struggle is why it now iterates: it turns what I learn into skills and improves itself. I hope it helps all of us pick up new skills fast, or at least in a reasonable time, in the age of AI.
+This took a long time and a lot of failure. From late February to October I tried to build a study system that would teach me and get it right. It kept not working. The thing I kept hitting was my own passive learning. I watched. I read. I nodded. I still could not do the thing. So I built a system that does not let me stay passive, and that an agent can run by the same rules. That failure is why it now iterates. It turns what I learn into skills. It improves itself. I hope it helps all of us pick up new skills fast, or at least in a fair time, in the age of AI.
 
 ## Licenses
 
-Third-party parts keep their own licenses: `skills/obsidian/LICENSE` (MIT, Steph Ango) and `skills/misc/skill_creator/LICENSE.txt` (Apache 2.0, Anthropic). No license is set yet for the rest of the repo.
+Third-party parts keep their own licenses. `skills/obsidian/LICENSE` is MIT, Steph Ango. `skills/misc/skill_creator/LICENSE.txt` is Apache 2.0, Anthropic. The rest of the repository has no license yet.
 
 ---
 
