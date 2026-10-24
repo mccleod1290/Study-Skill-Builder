@@ -9,7 +9,7 @@ This repo is the **skeleton**: phases, skills, rules, the agents, and a self-imp
 ## The loop
 
 ```text
-Study-OS (phases 1-4 + research)  --study, practice, research, extract-->  LLM wiki (private)
+Study-OS phases 1-4 + research-skill  --study, practice, research, extract-->  LLM wiki (private)
 LLM wiki                          --knowledge source-->                     depth | range | altitude agents
 the three agents                  --skill candidates-->                     skill factory
 skill factory                     --runnable skills (private)-->            labs, CTFs, bug bounty, work
@@ -27,6 +27,7 @@ The loop closes on the **harness trajectory**. The runtime (the [DeepSeek Harnes
 | Phase 2: page | `skills/phase_2/` | one study page from the map, first principles first, then a judge in its own window, then diagrams, an interactive page, an explainer video |
 | Phase 3: test | `skills/phase_3/` | Socratic spar, academic papers, a practical build |
 | Phase 4: diagnose | `skills/phase_4/` | find the shared root of repeated misses, route back to the right phase |
+| Research skill | `research-skill/` (submodule) | searches, explores and brings in external resources (blogs, papers, tools, videos) that feed the wiki. Lives in [mccleod1290/Research-Skill](https://github.com/mccleod1290/Research-Skill) |
 | Three agents | `.agents/` | `depth_agent`, `range_agent`, `altitude_agent` |
 | LLM wiki skills | `skills/wiki/` | `SCHEMA.md` plus `wiki_ingest`, `wiki_query`, `wiki_lint` |
 | Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): wiki page syntax, bases, canvas, CLI, clean web capture |
@@ -59,7 +60,7 @@ Shared rules: each agent runs in its own context window, no agent grades its own
 
 ## Quick start
 
-1. Clone the repo. Open it with Claude Code, Codex, Copilot or any agent that reads `AGENTS.md`.
+1. Clone the repo **with submodules** (the research skill is one): `git clone --recursive <url>`, or after a plain clone run `git submodule update --init`. Open it with Claude Code, Codex, Copilot or any agent that reads `AGENTS.md`.
 2. Read `AGENTS.md`, then `REPO_MAP.md`.
 3. Copy the agents where your tool loads them, for example for Claude Code:
 
