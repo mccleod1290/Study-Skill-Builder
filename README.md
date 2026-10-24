@@ -136,6 +136,27 @@ Not a secret — take it and use it. These are the habits that turn knowledge in
 
 **7. Ask for depth, not size.** When you go back to a topic, ask for "a deeper version of this task, not a bigger one" — the raw data, the real tools, the first principles. That is the depth agent's whole job.
 
+**8. Set the whole thing up with one prompt.** You do not hand-configure this. Open the repo in an agent and tell it, in plain words, to set itself up — for example:
+
+> Read `AGENTS.md` and `REPO_MAP.md`. Copy the agents into `.claude/agents/`, initialise the `research-skill` submodule, create the `llm_wiki/` vault from `skills/wiki/SCHEMA.md`, and walk me through the email env file. Then confirm `python twin/check.py` (or `repo_map.py --check`) prints OK.
+
+The agent does the wiring. It **burns tokens, but it saves your time** — that is the trade this whole OS is built on: spend cheap model tokens so you spend your hours on learning and building, not on setup and note-keeping.
+
+### Setup, by prompt or by hand
+
+Either let an agent do step 8, or do it yourself:
+
+1. **Clone with submodules:** `git clone --recursive <this-repo>` (or `git submodule update --init` after a plain clone) — the research skill is a submodule.
+2. **Pick your runtime and read its install docs:**
+   - DeepSeek Harness (the runtime behind the trajectory loop) — install from its README: https://github.com/deepseek-ai/deepseek-harness
+   - or Claude Code — skills and agents docs: https://code.claude.com/docs/en/skills (the Agent Skills spec: https://agentskills.io/specification)
+3. **Load the agents:** `mkdir -p .claude/agents && cp .agents/*_agent.md .claude/agents/`.
+4. **Optional memory:** claude-mem, install per its README: https://github.com/thedotmack/claude-mem. Obsidian skills are vendored from https://github.com/kepano/obsidian-skills.
+5. **Email (optional):** follow `skills/self_improve/trajectory_distill/references/email-setup.md` to put a Gmail app password in a local env file (never in the repo).
+6. **Research skill:** maintained in its own repo, https://github.com/mccleod1290/Research-Skill.
+
+Always check each project's own README or docs for the current install steps.
+
 ## Keep your fork private-safe
 
 If you keep a private full copy and publish only the skeleton, use the export script. It copies an allowlist, scrubs, rebuilds the map, then scans for private matches (emails, home paths, key patterns, and any term you list in a local `.export_private.json`). It exits 1 on any match.
