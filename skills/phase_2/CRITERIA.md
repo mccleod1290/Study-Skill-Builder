@@ -86,6 +86,12 @@ Sentences are his. The voice spec is `.grok/skills/writer-skill/references/PERSO
 
 Fail if the page is a vendor abstract.
 
+## discovery
+
+When the page covers a vulnerability or attack technique, it has a "Discovery" section with three parts: how to find it (signals, tools, patterns), when to favour discovery (likely situations), when it does not apply (defenses, architectures). Each part has three concrete scenarios.
+
+Fail if the page covers a vulnerability and the discovery section is missing. Fail if any of the three parts has fewer than three scenarios.
+
 ## not_a_test
 
 The page has no quiz, no workbook, and no score. Two exceptions: a Knowledge Check of 3 to 5 short self-assessment questions may appear at the end, in a collapsible section. It is not graded. A Tips & Tricks section of at most 7 practical gimmicks may also appear.
