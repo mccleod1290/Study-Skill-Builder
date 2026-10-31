@@ -88,9 +88,9 @@ Fail if the page is a vendor abstract.
 
 ## not_a_test
 
-The page has no quiz, no workbook, no score, and no question block.
+The page has no quiz, no workbook, and no score. Two exceptions: a Knowledge Check of 3 to 5 short self-assessment questions may appear at the end, in a collapsible section. It is not graded. A Tips & Tricks section of at most 7 practical gimmicks may also appear.
 
-Fail if any of those are present.
+Fail if a quiz, workbook, or score is present. Fail if the knowledge check has more than 5 questions. Fail if it appears mid-page rather than at the end. Fail if Tips & Tricks has more than 7 items.
 
 ## budget
 

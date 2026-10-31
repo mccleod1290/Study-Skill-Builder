@@ -8,7 +8,11 @@ The page is how he comes to understand a topic. Depth is how the thing works. Br
 
 The field keeps moving. A page that only quizzes him is useless the month the tool changes. A page that shows the mechanism, the edges, and the ways through is how he stays able to work.
 
-Phase 2 does not test him. No quiz. No workbook. No score. No question block. No check of his fluency.
+Phase 2 does not test him. No quiz. No workbook. No score. No formal check of his fluency. Three additions, set by him on 2026-11-01:
+
+1. **Knowledge Check.** 3 to 5 short self-assessment questions at the end of the page, in a collapsible section labeled "Knowledge Check." It is homework, not an exam: no grade, no score. Each question has its answer hidden in a toggle. The questions check if he got the gist, not if he memorized the page. A question like "What are the three conditions?" is fine. "Write an exploit" belongs in phase 3.
+2. **Tips & Tricks.** A short section of practical gimmicks: shortcuts, one-liners, quick wins, the kind of trick that lets someone who has not spent years on the topic still get the job done. At most 5 to 7 items, each one or two sentences. Pin-on-your-monitor stuff.
+3. **Richer visuals and external references.** More inline diagrams, more external reference links to authoritative sources (official docs, research posts, tools). A concept that can be drawn should be drawn. A term that has a canonical reference should link to it.
 
 ## Order and coverage
 

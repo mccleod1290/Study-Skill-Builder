@@ -14,7 +14,9 @@ More diagrams, fewer words. A visual must be flashy enough to be remembered and 
 | `anatomy` | https://github.com/wheresryan22/anatomy | Use when a concept is a mechanism that can be drawn as one physical machine (a lock, a gate, a tumbler). The working of the machine is the concept. | SVG, or one HTML figure |
 | `archify` | https://github.com/tt-a1i/archify | **Only when needed.** Use for a whole-system architecture or request path with many parts that the reader must explore (click, trace a path). Never for a flow that `diagram-design` draws well. | one HTML figure |
 
-Order of choice: `diagram-design` first. Ask for `anatomy` only when a machine metaphor is the clearest teacher. Ask for `archify` last.
+| `paperbanana` | https://github.com/dwzhu-pku/PaperBanana | **Add-on.** AI-generated academic-style illustrations (ICML 2026 Spotlight). Use when a concept needs a publication-quality figure that the three tools above cannot draw well: complex multi-part research illustrations, annotated mechanism diagrams, academic poster visuals. Runs a 5-agent pipeline (retriever, planner, stylist, visualizer, critic). Needs API key (Gemini or OpenRouter). Ask before using. | PNG or SVG |
+
+Order of choice: `diagram-design` first. Ask for `anatomy` only when a machine metaphor is the clearest teacher. Ask for `archify` last. `paperbanana` is an add-on, never a replacement: use it alongside the others when academic illustration quality is needed.
 
 ## 3. The 1:n rule
 
