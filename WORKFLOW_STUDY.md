@@ -13,7 +13,7 @@ flowchart TD
   end
   M -->|MAP.md, TARGET.md, mindmap.json, MAP.html| P2
   subgraph P2[Phase 2: assimilation]
-    E[ideas_skill] --> W[writer_skill] --> R[reduce_ambiguity] --> B[brevity_is_the_soul] --> J{frugal_judge}
+    W[writer_skill] --> R[reduce_ambiguity] --> L[lenses: marked nodes only] --> B[brevity_is_the_soul] --> J{frugal_judge}
     J -->|not satisfied, cap 3 to 5| E
   end
   J -->|PAGE.md, PAGE.html, PAGE.pdf| P3
@@ -35,7 +35,7 @@ flowchart TD
 | phase | job | skills | reads | writes (in `Artifacts/artifacts/<group>/<topic>/`) | gate to enter |
 |---|---|---|---|---|---|
 | 1 target and map | find what he knows, freeze it, map what to learn | `interviewer`, `context_clerk`, `map_maker` (+ `madhura-extraction-system` for book, video, course) | source material, his answers | `phase1_target`, `phase1_context`, `phase1_map`, `phase1_mindmap.json`, `phase1_map.html` | none |
-| 2 assimilation | enough depth and breadth to work alone. no quiz | `ideas_skill`, `writer_skill`, `reduce_ambiguity`, `brevity_is_the_soul`, `frugal_judge` | phase 1 map and target | `phase2_page` (.md .html .pdf), `phase2_eval`, `phase2_sources` | phase 1 files exist |
+| 2 assimilation | enough depth and breadth to work alone. no quiz | `writer_skill`, `reduce_ambiguity`, lenses (`first_principles`, `second_order_thinking`, `socratic_questions`, marked nodes only), `brevity_is_the_soul`, `frugal_judge` | phase 1 map and target | `phase2_page` (.md .html .pdf), `phase2_eval`, `phase2_sources` | phase 1 files exist |
 | 3 exam | prove it. practical build, three papers, a live spar | `examiner`, `academic_paper`, `practical_build`, `socratic_spar` | phase 1 map, phase 2 page | the papers, the brief, marks | phase 1 and 2 files exist |
 | 4 diagnose and file | find the shared root of his misses, one route back, file everything | `diagnostician`, `harness_clerk` | phases 1 to 3, session logs | `DIAGNOSIS`, topic `INDEX.md` | phase 3 done |
 

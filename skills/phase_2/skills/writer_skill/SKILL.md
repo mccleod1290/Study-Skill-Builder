@@ -12,7 +12,7 @@ effort: high
 
 the voice spec stays `.grok/skills/writer-skill/references/PERSONAL_LANGUAGE_SKILL.md`. read it before the sentences. do not copy it here. do not load the corpus unless a wording choice is actually in doubt.
 
-the order is already in `PAGE.md` from ideas_skill. do not reorder the page to sound smoother.
+the order comes from `skills/phase_2/PAGE_ORDER.md` (map order, mechanism first). do not reorder the page to sound smoother.
 
 keep the technical meaning. a claim with no url in `SOURCES.md` comes out, not in.
 

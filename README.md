@@ -59,7 +59,7 @@ That line is [kache's (@yacineMTB)](https://x.com/yacineMTB). [Andrej Karpathy](
 | part | where | what it does |
 |---|---|---|
 | Phase 1: map | `skills/phase_1/` | interviews the learner, freezes the context, maps the parts, the dependencies, and the stuck points |
-| Phase 2: explain | `skills/phase_2/` | writes one study page from the map. first principles first. then a judge, diagrams, an interactive page, and a video |
+| Phase 2: explain | `skills/phase_2/` | writes one study page from the map in map order (`PAGE_ORDER.md`). first principles and second order run only on ambiguous nodes. then a judge, diagrams, an interactive page, and a video |
 | Phase 3: test | `skills/phase_3/` | runs a Socratic spar, three papers, and a practical build |
 | Phase 4: diagnose | `skills/phase_4/` | finds the shared root of repeated misses, then routes back to the right phase |
 | Research skill | `research-skill/` (submodule) | searches and brings in outside resources that feed the wiki. lives in [mccleod1290/Research-Skill](https://github.com/mccleod1290/Research-Skill) |
@@ -68,9 +68,43 @@ That line is [kache's (@yacineMTB)](https://x.com/yacineMTB). [Andrej Karpathy](
 | Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): page syntax, bases, canvas, CLI, clean web capture |
 | Skill factory | `skills/skill_factory/skill_smith/` | turns agent output into a guide, scripts, a checklist, a lab, and a test |
 | Self-improving loop | `skills/self_improve/trajectory_distill/` | reads a trajectory export, writes two HTML files, mails them, files gaps |
+| Notes | `skills/notes/` | `note_writer` (short atomic notes, one schema) and `vault_setup` (Obsidian vault, new-note router plugin, Bases, CSS). see [the notes system](#the-notes-system) |
 | House skills | `skills/misc/` | `skill_creator`, `karpathy_agents_md`, `learn_from_sessions` |
 | Rules | `.rules/` | grounding, brevity, HTML output, context isolation, phase order, skill authoring, visuals |
 | Map | `REPO_MAP.md` | where everything lives. rebuild it with `python skills/scripts/repo_map.py` |
+
+## The notes system
+
+Study pages are for learning. Notes are for the job. `skills/notes/` builds a vault of short, linked notes. The idea is from [Graham Helton](https://grahamhelton.com/blog/human-memory-management): the common word is the entry point, the rare words are atomic notes under it. In an engagement you search `sql injection`, not `error based sql`.
+
+```mermaid
+flowchart TD
+  H["concept: sql injection<br/>hub, links only"] --> A["technique: error based sql"]
+  H --> B["technique: second order sql"]
+  H --> C["technique: blind sql"]
+  H -.->|"stub link: not learned yet"| S(["parameterized query"])
+  A -->|"reference"| H
+```
+
+One vault, not five. Type sets the folder. A `domain` property sets the focus. A `web` view (an Obsidian Base) shows web notes only.
+
+```mermaid
+flowchart LR
+  N["new note"] --> I["inbox"] --> T["type"] --> M["name"] --> D["domain, many"] --> R["references, optional"]
+  R --> F["frontmatter, template, move to the type folder"]
+```
+
+The new-note router is a small local plugin. It has no dependencies and no network code. A note over 120 body words fails `check_note.py`. The lenses (`first_principles`, `second_order_thinking`) add one line to a bullet, and only when that bullet is ambiguous.
+
+```mermaid
+flowchart LR
+  W["writer_skill"] --> A["reduce_ambiguity<br/>marks nodes"] --> L{"marked?"}
+  L -->|"no"| B["brevity_is_the_soul"]
+  L -->|"yes"| X["lens: one line"] --> B
+  B --> J["frugal_judge"]
+```
+
+Build the vault with `python skills/notes/vault_setup/scripts/install_vault.py <dest>`. Details: `skills/notes/README.md`.
 
 ## The three agents
 

@@ -24,7 +24,7 @@ a term already in the flow, and each subtype, is one or two lines.
 
 a term that would stop him is two or three sentences. they stand alone. they say what it is and how it works.
 
-the model for those sentences is ideas_skill. first principles by default. second-order only when the line he is on is about the next event.
+the model for those sentences is `PAGE_ORDER.md`: parts, condition, when it does not apply, then how. a lens line (first principles, second order) stays only if it earns its place.
 
 sentence shape is simple english, pragmatic. the sound stays writer_skill.
 

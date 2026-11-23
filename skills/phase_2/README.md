@@ -10,7 +10,7 @@ The law is `RULES.md`. The judge reads `CRITERIA.md`.
 explainer agent
   |
   v
-ideas_skill -> writer_skill -> reduce_ambiguity -> brevity_is_the_soul
+writer_skill -> reduce_ambiguity -> lenses (marked nodes only) -> brevity_is_the_soul
   |
   v
 PAGE.md  PAGE.html  PAGE.pdf     references in the last section
@@ -26,7 +26,10 @@ frugal_judge
 | --- | --- |
 | `RULES.md` | Assimilation. No quiz. |
 | `CRITERIA.md` | What the judge checks |
-| `skills/ideas_skill/` | Depth, breadth, possibilities |
+| `skills/first_principles/` | Lens. Only on nodes `reduce_ambiguity` marked. What stays true in this context. Writes `phase2_fp.md`. |
+| `skills/second_order_thinking/` | Lens. Only on marked nodes. What follows, where the next event is the lesson. Writes `phase2_so.md`. |
+| `PAGE_ORDER.md` | Map order, mechanism first, and the lens gate. Replaces `ideas_skill` (archived) |
+| `skills/socratic_questions/` | Lens, opt-in. One question at a time, asked live. Adds nothing to the page |
 | `skills/writer_skill/` | His sentences |
 | `skills/reduce_ambiguity/` | Examples, pictures, links |
 | `skills/brevity_is_the_soul/` | Cut fluff, keep the flow |

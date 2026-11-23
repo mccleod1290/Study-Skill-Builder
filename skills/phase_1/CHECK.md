@@ -23,7 +23,7 @@ Source: the phase 1 request. Checked against `RULES.md`, `PACKET.md`, the two sk
 4. Met. That work goes under `exposure`. The map maker does not promote it into `acquired`.
 5. Met. Known mode drills in batches of 3, cap 12, stretch 15, 20 minutes. A miss is a gap. No lecture.
 6. Met. `map_maker` acquired rule. Zero mode stays empty unless a file shows the skill.
-7. Met. `skills/phase_2/RULES.md`, `.grok/agents/explainer.md`, and `ideas_skill` stop when `MAP.md` is missing. Section order is the map order.
+7. Met. `skills/phase_2/RULES.md`, `.grok/agents/explainer.md`, and `PAGE_ORDER.md` stop when `MAP.md` is missing. Section order is the map order.
 8. Met. `skills/phase_3/RULES.md`. Papers, the build brief, and the spar stop when the map is missing. A dropped domain is not a question and not the build.
 9. Met. Interviewer skill, from `2026-10-06-study-os/SARAV.md`. "Learn coding" is not the goal if the goal is a timed interview in three weeks.
 10. Met. Map maker skill. Stuck points need a source. An unopened claim stays `ungrounded`.

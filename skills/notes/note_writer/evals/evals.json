@@ -1,0 +1,5 @@
+{"skill_name":"note_writer","evals":[
+{"id":1,"prompt":"note: error based sql injection. the database error message shows query results. needs verbose errors.","assertions":["title is 'error based sql' or similar lowercase noun phrase","type technique, folder 2_technique","links up to [[sql injection]] in reference","check_note.py prints OK","body under 120 words, bullets under 21 words"]},
+{"id":2,"prompt":"trim this note to the short style: (a 300 word paragraph note about CSRF with three ideas)","assertions":["split into atomic notes or keeps one idea only","title is the common name 'csrf'","check_note.py prints OK","no lens line added unless a bullet is ambiguous"]},
+{"id":3,"prompt":"note: second order sql. this node is ambiguous: scanners miss it, why?","assertions":["adds at most one why or next line","the note stays within budget","the line is placed under the ambiguous bullet only"]},
+{"id":4,"prompt":"add a screenshot of burp output to my short note on xss","assertions":["refuses to add it to the short note","suggests a 3_research note with the screenshot in _obsidian/attachments"]}]}

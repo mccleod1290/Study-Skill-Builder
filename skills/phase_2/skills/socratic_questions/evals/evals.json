@@ -1,0 +1,4 @@
+{"skill_name":"socratic_questions","evals":[
+{"id":1,"prompt":"question me on this note: 'second order sql injection: payload stored, runs later.'","assertions":["asks exactly one question in the first reply","does not list several questions","adds at most one 'why:' line after he answers"]},
+{"id":2,"prompt":"socratic questions on my CSRF note, it is already 60 words","assertions":["the final note is not longer than 60 words","the added line replaces a weaker line or the note stays within its budget"]},
+{"id":3,"prompt":"/socratic_questions on a node whose text is a plain definition with no ambiguity","assertions":["says the node has no ambiguity and stops","asks no question"]}]}

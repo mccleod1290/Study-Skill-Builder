@@ -21,6 +21,19 @@ prose length stays in brevity_is_the_soul. this skill adds the artifact beside t
 
 read `SOURCES.md` and the page. mark a spot when the term is new, the next step is a flow he cannot see, the mechanism is code, or three sentences would still leave a mystery.
 
+## mark the node, name the lens (2026-11-23)
+
+each marked spot is a node id. write the marks to `skills/phase_2/output/<slug>/phase2_ambiguity.md`: node id, the stuck line, and the lens it needs. this file is the only gate for the lenses (`skills/phase_2/PAGE_ORDER.md`).
+
+| the stuck line is | lens |
+|---|---|
+| a claim where law, convention and assumption blur | `first_principles` |
+| a decision or default, and the next event is the lesson | `second_order_thinking` |
+| a model he must test against his own (live only) | `socratic_questions` |
+| a plain new term or a flow | no lens. an example or a picture, below |
+
+a node with no mark gets no lens. most nodes need only an example. do not mark to look thorough.
+
 ## what to add
 
 at each marked spot, as many of these as that spot needs:

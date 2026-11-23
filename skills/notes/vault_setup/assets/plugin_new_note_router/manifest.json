@@ -1,0 +1,9 @@
+{
+  "id": "new-note-router",
+  "name": "New note router",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "On every new note: ask type, name, domain and references. Writes the frontmatter, applies the body skeleton, moves the note to its type folder. Local code, no network, no dependencies.",
+  "author": "mccleod1290",
+  "isDesktopOnly": false
+}

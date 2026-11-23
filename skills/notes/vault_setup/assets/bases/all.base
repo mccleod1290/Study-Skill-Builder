@@ -1,0 +1,40 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - '!file.inFolder("_obsidian")'
+formulas:
+  links_out: 'file.links.length'
+  links_in: 'file.backlinks.length'
+properties:
+  formula.links_out:
+    displayName: out
+  formula.links_in:
+    displayName: in
+views:
+  - type: table
+    name: all notes
+    order:
+      - file.name
+      - type
+      - domain
+      - formula.links_out
+      - formula.links_in
+      - file.mtime
+  - type: table
+    name: no gist yet
+    filters:
+      and:
+        - 'description == ""'
+    order:
+      - file.name
+      - type
+      - domain
+  - type: table
+    name: orphans (nothing links in)
+    filters:
+      and:
+        - 'file.backlinks.length == 0'
+    order:
+      - file.name
+      - type
+      - domain

@@ -17,6 +17,8 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 | `karpathy_agents_md` | `skills/misc/karpathy_agents_md/SKILL.md` | misc skill. audits AGENTS.md against the Karpathy-style guidelines (think before acting, simplicity, surgical changes, goal-driven) and rewrites it short and sharp, keeping every project fact. |
 | `learn_from_sessions` | `skills/misc/learn_from_sessions/SKILL.md` | misc skill. reads the session logs and documents how the user works with the AI: how he nudges, what he really means, his taste, his expectations, how he gets things done. |
 | `skill_creator` | `skills/misc/skill_creator/SKILL.md` | misc skill. creates a new skill, or sharpens an existing one, to our house rules (.rules/skill-authoring.md): snake_case name, description in a >- block with trigger words, model and effort set, fork ... |
+| `note_writer` | `skills/notes/note_writer/SKILL.md` | notes skill. writes or trims one pentest note in the short style: one idea, flat bullets, most common name as title, rare terms as linked atomic notes, one typed frontmatter. |
+| `vault_setup` | `skills/notes/vault_setup/SKILL.md` | notes skill. builds or tops up the pentest Obsidian vault: type folders, one frontmatter schema, templates, the web and all Bases, the new-note router plugin (asks type, name, domain, references, then... |
 | `defuddle` | `skills/obsidian/defuddle/SKILL.md` | Extract clean Markdown from HTML pages with Defuddle CLI. |
 | `json-canvas` | `skills/obsidian/json-canvas/SKILL.md` | Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections. Use when working with .canvas files, creating visual canvases, mind maps, flowcharts, or when the user mentions ... |
 | `knap` | `skills/obsidian/knap/SKILL.md` | Render Markdown from templates and structured data using Knap CLI. Use when the user asks to apply a Knap template, turn JSON or CSV data into notes, batch-generate Markdown files, or format Defuddle ... |
@@ -30,9 +32,11 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 | `brevity_is_the_soul` | `skills/phase_2/skills/brevity_is_the_soul/SKILL.md` | phase 2 length pass on PAGE.md. NEVER CONFUSE EXPLANATION WITH FLUFF. a new term gets two or three sentences, what it is and how it works. |
 | `diagrammer` | `skills/phase_2/skills/diagrammer/SKILL.md` | phase 2 visual pass, step 1. turns a judged phase 2 page into hand-drawn inline svg diagrams, one per domain and more where the order or the shape is the point, and writes phase2_visuals.json for web_... |
 | `explainer_video` | `skills/phase_2/skills/explainer_video/SKILL.md` | phase 2 visual pass, step 3. turns the judged phase 2 page and the diagrammer's diagrams into a narrated explainer film in the 3Blue1Brown manner: one manim scene per domain, ElevenLabs narration in A... |
+| `first_principles` | `skills/phase_2/skills/first_principles/SKILL.md` | phase 2 skill. takes one claim, belief, design choice or problem (a node of a phase 1 map), splits it into law, convention and assumption, grades each part, and rebuilds from what stays true in this c... |
 | `frugal_judge` | `skills/phase_2/skills/frugal_judge/SKILL.md` | phase 2 judge. reads RULES.md and CRITERIA.md and writes EVAL.md. checks the page for assimilation, not for a quiz. |
-| `ideas_skill` | `skills/phase_2/skills/ideas_skill/SKILL.md` | phase 2 order for a study page. first principles by default. second-order only when the next event is the lesson. |
 | `reduce_ambiguity` | `skills/phase_2/skills/reduce_ambiguity/SKILL.md` | phase 2 ambiguity pass. finds where a new learner will stumble and adds examples, diagrams, flowcharts, svg, sourced images, code, and a reference blog. |
+| `second_order_thinking` | `skills/phase_2/skills/second_order_thinking/SKILL.md` | phase 2 skill. traces what happens after the first effect of a decision, mechanism or default, and says which later effect is the lesson. |
+| `socratic_questions` | `skills/phase_2/skills/socratic_questions/SKILL.md` | phase 2 lens, opt-in. asks him one short question at a time about one marked, ambiguous node, until the hole has a name, then adds at most one line to the note or page. |
 | `web_builder` | `skills/phase_2/skills/web_builder/SKILL.md` | phase 2 visual pass, step 2. fuses the judged phase 2 page and the diagrammer's svgs into one interactive, self-contained web page, phase2_explorer.html: section nav, step-through diagrams, an applies... |
 | `writer_skill` | `skills/phase_2/skills/writer_skill/SKILL.md` | phase 2 sentences for PAGE.md, in mccleod1290's voice. wording only. does not choose the order. |
 | `academic_paper` | `skills/phase_3/skills/academic_paper/SKILL.md` | phase 3 academic papers. topics come from the phase 1 map. the phase 2 page has to support the question. |
@@ -76,10 +80,12 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 
 ## Skill groups
 
+- `skills/_archive/`
 - `skills/misc/` skills: karpathy_agents_md, learn_from_sessions, skill_creator
+- `skills/notes/` skills: note_writer, vault_setup. files: README.md
 - `skills/obsidian/` skills: defuddle, json-canvas, knap, obsidian-bases, obsidian-cli, obsidian-markdown. files: LICENSE, README.md
 - `skills/phase_1/` skills: context_clerk, interviewer, madhura-extraction-system-v1, map_maker. files: CHECK.md, PACKET.md, PATHS.md, README.md, RULES.md
-- `skills/phase_2/` skills: brevity_is_the_soul, diagrammer, explainer_video, frugal_judge, ideas_skill, reduce_ambiguity, web_builder, writer_skill. files: CRITERIA.md, PATHS.md, README.md, RULES.md, VISUALS.md
+- `skills/phase_2/` skills: brevity_is_the_soul, diagrammer, explainer_video, first_principles, frugal_judge, reduce_ambiguity, second_order_thinking, socratic_questions, web_builder, writer_skill. files: CRITERIA.md, PAGE_ORDER.md, PATHS.md, README.md, RULES.md, VISUALS.md
 - `skills/phase_3/` skills: academic_paper, examiner, practical_build, socratic_spar. files: PATHS.md, README.md, RULES.md
 - `skills/phase_4/` skills: diagnostician, harness_clerk. files: CHECK.md, PATHS.md, README.md, RULES.md
 - `skills/scripts/`. files: build_explorer.py, build_mindmap.py, check_coverage.py, check_visuals.py, export_public.py, learn_due.py, md_to_pdf.py, mindmap_template.html, repo_map.py, send_notes_email.py, tidy.py, validate_skill.py

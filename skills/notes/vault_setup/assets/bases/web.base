@@ -1,0 +1,29 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - '!file.inFolder("_obsidian")'
+    - 'domain.contains("web")'
+properties:
+  file.name:
+    displayName: note
+  type:
+    displayName: type
+  description:
+    displayName: gist
+views:
+  - type: table
+    name: web. concepts first
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - description
+      - reference
+      - file.mtime
+  - type: cards
+    name: web. cards
+    order:
+      - file.name
+      - type
+      - description

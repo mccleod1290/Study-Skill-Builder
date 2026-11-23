@@ -1,0 +1,65 @@
+{
+  "skill_name": "first_principles",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "first principles on this claim: \"HttpOnly means XSS cannot steal the session.\" what is actually true here? no topic folder yet, just break it down.",
+      "expected_output": "A reply in chat, no file. A header block with a Pair line, the opened sources and a tally of parts by grade, then a node table for chat1 in the worksheet column order, then a parts table and a stops table. The claim is split into labelled parts: what the flag does and who sets it is a convention with a named holder, and the belief that cookie theft is the only way to abuse a session is an assumption. Each part has a grade, and a part with no opened source is grade 2 and says not verified. The node table has a grade cell (the weakest part) and a base grade cell (the weakest law or convention part, which an assumption does not lower). A why chain or the six moves ends at a stated stop with its reason. The condition names the context (which browsers, which version). The when it does not apply cell says where the claim fails and where an analogy is enough. The rebuild cell gives what must be true, the cheapest test, and the gap to the analogy answer, and it calls the result a hypothesis. The full-run node takes at most 700 words, counted with its Parts-table and Stops rows.",
+      "assertions": [
+        "The reply uses the node id chat1 and a node table whose column headers appear in this order: node id, claim as stated, parts, evidence, grade, base grade, condition, when it does not apply, rebuild (how).",
+        "Every part is labelled law, convention or assumption. Every convention names a holder (a browser vendor, a spec body, a framework, a team). No browser, vendor or framework behaviour is labelled a law.",
+        "Every part has a grade from 1 to 5. A part with no source named in the reply is graded 2 or 1 and carries the words 'not verified' or 'open question'. The reply shows a tally of parts by grade.",
+        "The condition and when it does not apply columns come before rebuild (how). The reply does not open with steps, a payload or a procedure.",
+        "The reply shows a why chain or the six moves and ends at a stated stop: a law, a measurement, or an honest 'I do not know' written as an open question at grade 1 with a test. The reply says why it stopped there.",
+        "The reply opens with a header block that has a Pair line naming second_order_thinking, the opened sources and the tally. It contains no 'and then what' chain and writes no file: it does not name a topic folder it made up.",
+        "The base grade cell equals the weakest grade among the node's law and convention parts, or the grade of the stop when the node has none. An assumption part does not lower it.",
+        "(no skill words) Every rule or default the claim depends on is credited to a named owner (a browser vendor, a spec body such as the IETF or WHATWG, a framework or a team). The reply says where that owner states the rule, or says it did not check.",
+        "(no skill words) The reply states the usual answer (what most people would say), the answer it reaches from the facts, and whether the two differ. If they match, the reply says so.",
+        "The full-run node takes at most 700 words in the reply, counted with its Parts-table and Stops rows. The header block does not count."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "first principles on {c2a} and {c2b} from the cloud security map. {c2a}: every new bucket gets the team name prefix. {c2b}: one aws account per environment, because that is how everyone does it. break both down. what is true, what is habit? no topic folder yet.",
+      "expected_output": "A reply in chat, no file. A header block with a Pair line, then two rows, one per node id. {c2a} is routine and cheap to get wrong, so the gate stops the full run even though the prompt asks to break both down. The row is short and marked gate: analogy. It gives the copied convention and its holder and the carry-over assumption (each with a Parts-table row and a grade), and a flip signal under when it does not apply that names the inputs that would flip it (for example a new data class, a shared tenant or new spend). A change in the facts that the node text does not show, such as a vendor feature the runner found, does not lift the gate. The row notes it. {c2b} gets the full run: parts split into law, convention and assumption, with that is how everyone does it filed as a convention or an assumption. A why chain ends at a stop with its reason. An authority's word, such as a vendor guide, is filed as a convention with a holder and the chain goes on. The rebuild lists what must be true, the cheapest set and the gap to the analogy answer, and states the result as a hypothesis with a test. Every part is graded and the tally is shown. Both rows have a base grade cell.",
+      "assertions": [
+        "The reply has one row for {c2a} and one row for {c2b}, using those ids. Neither node is dropped.",
+        "{c2a} is marked 'gate: analogy' and names a gate reason: routine, low stakes, not worth the work, or not a claim. The request to break both nodes down does not lift the gate. Its row is short, has Parts-table rows only for the copied convention and the carry-over assumption (each with a grade), gives a flip signal under 'when it does not apply' that names the inputs that would flip it (such as a new data class, a shared tenant or new spend), and has no six-move trace. A vendor change that the node text does not show is noted in the row and does not turn the gate off.",
+        "{c2b} splits into parts labelled law, convention and assumption. 'That is how everyone does it' is filed as a convention with a holder, or as an assumption, never as a law.",
+        "{c2b} has a why chain that ends at a law, a measurement or 'I do not know', with the reason for the stop written. If the chain meets an authority's word (a vendor guide or a team rule), the reply files it as a convention with a holder and goes on.",
+        "The 'rebuild (how)' cell for {c2b} gives, in this order: what must be true, the cheapest set, the gap to the analogy answer. The rebuilt answer is stated as a hypothesis with a test, not as a proven result.",
+        "Every part has a grade from 1 to 5. A part taken from memory has grade 2 and the words 'not verified'. The reply shows the tally of parts by grade.",
+        "Both rows have a base grade cell. The {c2a} gate row takes the grade of the convention it copies. The {c2b} base grade ignores its assumption parts.",
+        "The {c2a} row takes at most 150 words and the {c2b} node at most 700 words. Each count includes the node's Parts-table and Stops rows. The header block does not count."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "first principles on {w1} and {w2} from the web security map. {w1}: the tenth login form on a stack we know gets the checklist from the last nine. {w2}: every throwaway lab VM starts from the team base image. what is true, what is habit? no topic folder yet.",
+      "expected_output": "A reply in chat, no file. A header block with a Pair line, the opened sources (none, or a short list) and a tally of parts by grade. Two short rows, one per node id, and nothing else: no why chain, no six-move trace, no full parts split. Each row starts rebuild (how) with gate: analogy, names a gate reason (routine for {w1}; low stakes for {w2}), names the copied convention with its holder and one carry-over assumption (each with a Parts-table row and a grade), and gives a flip signal that names the inputs that would switch it to a full run (a response no earlier form gave; real data, a shared network or real spend). The base grade of each row is the grade of the copied convention.",
+      "assertions": [
+        "The reply has one row for {w1} and one row for {w2}, using those ids. Neither node is dropped.",
+        "Both rows start 'rebuild (how)' with 'gate: analogy' and name a gate reason: routine, low stakes or not worth the work.",
+        "Neither node gets a why chain, a six-move trace or a full parts split. Each row names the copied convention with its holder and one carry-over assumption. Those two have rows in the Parts table, each with a grade.",
+        "Each row's 'when it does not apply' cell gives a flip signal that names the inputs that would flip the gate.",
+        "The reply shows a Pair line naming second_order_thinking and the tally of parts by grade. Every part has a grade from 1 to 5 and carries the words 'not verified' where nothing was opened.",
+        "Each row takes at most 150 words, counted with its Parts-table rows. The header block does not count.",
+        "(no skill words) For each node, the reply says plainly that copying the usual practice is fine here, and says what new fact would make it worth thinking the question through from the start."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "first principles on {n1} and {n2} from the phase 1 map. {n1}: the command `curl -I https://target.example/`. {n2}: the list of HTTP methods GET, POST, PUT and DELETE. no topic folder yet.",
+      "expected_output": "A reply in chat, no file. A header block with a Pair line and a tally that shows no parts. Two one-line rows, one per node id. Each row says what the node is (a command; a list) and how it is used. rebuild (how) starts with gate: not a claim. parts says none. grade and base grade say n/a. There is no parts table, no why chain, no six-move trace and no rebuild steps. The reply invents no claim about the command or the list.",
+      "assertions": [
+        "The reply has one row for {n1} and one row for {n2}, using those ids. Neither node is dropped.",
+        "Each row says, in one line, what the node is (a command, a list) and how it is used.",
+        "Each row's 'rebuild (how)' starts with 'gate: not a claim'. 'parts' reads none. 'grade' and 'base grade' read n/a.",
+        "The reply has no parts split, no why chain, no six-move trace and no rebuild steps. It states no claim about the command or the list that it did not source.",
+        "The reply has a Pair line naming second_order_thinking and a tally that shows no parts.",
+        "Each row takes at most 150 words. The header block does not count.",
+        "(no skill words) Each row stays within one line and says what the item is and what it is used for. It does not argue for or against the item."
+      ]
+    }
+  ]
+}

@@ -46,11 +46,11 @@ This phase does not read the exam. If the map is missing, stop. Do not invent a 
 
 ## Who does the work
 
-The explainer is an agent. It is not a skill. It runs four agents, in this order, each pass:
+The explainer is an agent. It is not a skill. It runs these passes, in this order, each loop. `ideas_skill` is archived (2026-11-23): the order lives in `PAGE_ORDER.md`, the thinking lives in the lenses, and the lenses fire only on ambiguity:
 
-1. `ideas_skill` — depth, breadth, possibilities
-2. `writer_skill` — his sentences, simple language
-3. `reduce_ambiguity` — examples, pictures, links
+1. `writer_skill` — his sentences, in the order of `PAGE_ORDER.md`
+2. `reduce_ambiguity` — examples, pictures, links. Marks each ambiguous node in `phase2_ambiguity.md`
+3. lenses, on marked nodes only: `first_principles` (what is true), `second_order_thinking` (what follows), `socratic_questions` (opt-in, live). Each adds at most one line to a node
 4. `brevity_is_the_soul` — cut the fluff, keep the flow
 
 Then `frugal_judge` reads `CRITERIA.md` and writes `EVAL.md`. It does not teach, and it does not test him.
