@@ -1,7 +1,8 @@
 filters:
   and:
     - 'file.ext == "md"'
-    - '!file.inFolder("_obsidian")'
+    - 'file.inFolder("notes") || file.inFolder("wiki")'
+    - '!file.inFolder("notes/_obsidian")'
     - 'domain.contains("web")'
 properties:
   file.name:

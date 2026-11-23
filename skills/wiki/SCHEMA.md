@@ -4,10 +4,25 @@ Source: Andrej Karpathy, "LLM Wiki" gist, https://gist.github.com/karpathy/442a6
 
 The vault is private. It lives at `llm_wiki/` in this repo, is git-ignored, and is never exported (`skills/scripts/export_public.py` does not copy it). Open it in Obsidian as a vault.
 
+## Two owners, one vault (2026-11-23)
+
+The vault now holds his notes too. One vault, so one search, one graph, and one `web` view across both. The owner of a folder decides who may edit it.
+
+| folder | owner | the LLM may |
+|---|---|---|
+| `notes/` | him. Hand-written field notes (`skills/notes/`) | read and link. Never edit. One exception: `note_writer` appends one bullet to a hub |
+| `wiki/` | the LLM | write and edit |
+| `raw/` | sources | read only |
+
+Notes frontmatter differs from wiki frontmatter on purpose: notes use `title, date_created, description, type, domain (list), reference`. A wiki page keeps the properties below. `domain` is a string in the wiki and a list in notes. A `domain.contains("web")` filter works on both.
+
+One name, one file. Obsidian resolves `[[sql injection]]` to a single file. A wiki page and a note never share a title. `check_note.py <vault>/notes` fails on a collision. `wiki_ingest` links to the note and writes no twin.
+
 ## Three layers
 
 ```text
 llm_wiki/
+  notes/                his notes, type folders inside. see the table above
   raw/                  layer 1. sources. the LLM reads them, never edits them
     assets/             images and attachments the pages embed
   wiki/                 layer 2. pages the LLM writes and links

@@ -17,7 +17,9 @@ const TYPES = [
 ];
 const DOMAINS = ["web", "cloud", "ai", "linux", "windows", "macos", "mobile", "kubernetes", "network", "redteam", "blueteam", "career", "other"];
 const DONE = "Done selecting";
-const META = "_obsidian";
+// the vault root is llm_wiki/. notes/ is the human layer, wiki/ the LLM layer, raw/ the sources
+const NOTES = "notes";
+const META = NOTES + "/_obsidian";
 const INBOX = META + "/inbox";
 const TEMPLATES = META + "/templates";
 
@@ -30,7 +32,15 @@ function folderFor(type) {
   return t.folder;
 }
 function targetPath(type, title) {
-  return normalizePath(folderFor(type) + "/" + cleanTitle(title) + ".md");
+  return normalizePath(NOTES + "/" + folderFor(type) + "/" + cleanTitle(title) + ".md");
+}
+// auto-route only brand-new notes that Ctrl+N put in the inbox. agent-written wiki pages are never touched
+function shouldAutoRoute(path) {
+  return String(path).startsWith(INBOX + "/") && String(path).endsWith(".md");
+}
+// reference picker: human notes and wiki pages. never raw sources, templates or the inbox
+function isReferenceable(path) {
+  return (path.startsWith(NOTES + "/") && !path.startsWith(META + "/")) || path.startsWith("wiki/");
 }
 function isoDate(d) {
   const p = (n) => String(n).padStart(2, "0");
@@ -126,7 +136,7 @@ module.exports = class NewNoteRouter extends Plugin {
   }
   async onCreate(file) {
     if (!(file instanceof TFile) || file.extension !== "md") return;
-    if (file.path.startsWith(META + "/") && !file.path.startsWith(INBOX + "/")) return;
+    if (!shouldAutoRoute(file.path)) return;
     if (this.busy.has(file.path)) return;
     // only brand-new empty notes. sync, imports and clippings are not interrupted
     await new Promise((r) => setTimeout(r, 150));
@@ -154,7 +164,7 @@ module.exports = class NewNoteRouter extends Plugin {
         attack = a === null ? "" : a;
       }
       const notes = app.vault.getMarkdownFiles()
-        .filter((f) => !f.path.startsWith(META + "/") && f.path !== file.path)
+        .filter((f) => isReferenceable(f.path) && f.path !== file.path)
         .map((f) => f.basename).sort();
       const refs = await askMany(app, "Select a note to reference", notes, true);
       if (refs === null) return;
@@ -181,4 +191,4 @@ module.exports = class NewNoteRouter extends Plugin {
     }
   }
 };
-module.exports.__core = { cleanTitle, folderFor, targetPath, buildFrontmatter, skeleton, newBody, TYPES, DOMAINS };
+module.exports.__core = { cleanTitle, folderFor, targetPath, buildFrontmatter, skeleton, newBody, shouldAutoRoute, isReferenceable, TYPES, DOMAINS };

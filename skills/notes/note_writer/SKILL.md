@@ -12,23 +12,23 @@ effort: medium
 
 # note_writer
 
-One idea in. One short note out. The vault is `Pentest Vault` (built by `skills/notes/vault_setup`). The style comes from Helton, grounded in `references/helton_rules.md`.
+One idea in. One short note out. His notes live in `llm_wiki/notes/`, inside the same vault as the LLM wiki (built by `skills/notes/vault_setup`). He owns `notes/`. The LLM wiki owns `wiki/`. The style comes from Helton, grounded in `references/helton_rules.md`.
 
 ## The idea (his, from blog 1)
 
 During an engagement he searches `sql injection`, not `error based sql`. So the common word is the entry point and the rare words hang under it.
 
 ```text
-5_concept/sql injection        <- hub. links only, plus one gist line
-   |- 2_technique/error based sql     <- atomic. one idea. links back up
-   |- 2_technique/second order sql
+notes/5_concept/sql injection        <- hub. links only, plus one gist line
+   |- notes/2_technique/error based sql     <- atomic. one idea. links back up
+   |- notes/2_technique/second order sql
 ```
 
-Type sets the folder. `domain` sets the focus (`web`). `web.base` shows only web notes. Five vaults are not needed.
+Type sets the folder. `domain` sets the focus (`web`). `web.base` shows web notes and web wiki pages together. Five vaults are not needed, and neither is a separate vault from the wiki.
 
 ## Steps
 
-0. **Search first.** Look for a note on the same idea (title, then the common name). Found: extend that note, do not write a twin. Not found: continue.
+0. **Search first.** Look for a note on the same idea (title, then the common name), and for a wiki page of that name. A wiki page with that title: link to it and pick a more specific note title. One name, one file. Found: extend that note, do not write a twin. Not found: continue.
 1. **Pick the type and the title.** Types: technology, technique, research, tool, concept, prompt, bookmark, other. Title: the name he would search, lowercase, a bare noun phrase. A rare name is its own atomic note, linked up to its common name.
 2. **Write 3 to 8 flat bullets.** Under 20 words a line. One idea per bullet. Define by contrast when it helps: "stored now, run later". Then one-word headings only if needed: Usage, Detecting, Defense. End with `# References`.
 3. **Link while writing.** `[[wikilink]]` the first use of every term that has or should have a note. An unknown term stays a stub link. Do not fill a stub with a guess. Stubs are his list of gaps.
@@ -42,7 +42,7 @@ Type sets the folder. `domain` sets the focus (`web`). `web.base` shows only web
    - a decision or default, and the next event is the lesson: `second_order_thinking`, one `next:` line
    - he must test his own model: `socratic_questions`, live, opt-in
    No ambiguity, no lens. The lens line replaces a weaker line when the note is at budget.
-7. **Check.** `python skills/notes/note_writer/scripts/check_note.py <note.md or vault>`. It must print OK. A note that grew past 120 body words fails. Cut, do not raise the budget.
+7. **Check.** `python skills/notes/note_writer/scripts/check_note.py <note.md or llm_wiki/notes>`. It must print OK. A note that grew past 120 body words fails. So does a name a wiki page already uses. Cut, do not raise the budget.
 
 ## Trimming a long note
 

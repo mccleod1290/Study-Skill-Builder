@@ -18,7 +18,8 @@ Read `skills/wiki/SCHEMA.md` first. The vault is `llm_wiki/` in the Study-OS roo
 
 1. **Contradictions.** Two pages that claim opposite things. Cite both.
 2. **Stale claims.** A claim that a newer source replaces.
-3. **Orphans.** A page with no inbound `[[link]]`.
+3. **Orphans.** A page under `wiki/` with no inbound `[[link]]`. Count links from `notes/` as inbound. Never report a note as an orphan: `notes/` is his, not yours.
+3b. **Collisions.** A `wiki/` page and a note with one name. Report it. Do not rename a note.
 4. **Missing pages.** A `[[link]]` with no page, or an idea named on three or more pages with no page of its own.
 5. **Missing links.** Two pages that name each other's idea with no link.
 6. **Format.** Properties missing or wrong per SCHEMA.md. Use `skills/obsidian/obsidian-markdown` for the syntax.
@@ -26,7 +27,7 @@ Read `skills/wiki/SCHEMA.md` first. The vault is `llm_wiki/` in the Study-OS roo
 
 ## Steps
 
-1. List every page under `llm_wiki/wiki/`. Parse properties and links with a script, not by eye.
+1. List every page under `llm_wiki/wiki/`. Read `llm_wiki/notes/` for links and names only. Parse properties and links with a script, not by eye.
 2. Run the checks. Fix the mechanical ones (links, properties, index entries).
 3. Do not resolve a contradiction by choice. List it for him with both sources.
 4. Append the lint line to `llm_wiki/log.md`.

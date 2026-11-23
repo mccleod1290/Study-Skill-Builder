@@ -86,7 +86,20 @@ flowchart TD
   A -->|"reference"| H
 ```
 
-One vault, not five. Type sets the folder. A `domain` property sets the focus. A `web` view (an Obsidian Base) shows web notes only.
+One vault, not five, and the same vault as the LLM wiki. The vault is `llm_wiki/`. `notes/` is yours: hand-written, and the LLM reads and links it but never edits it. `wiki/` is the LLM's. `raw/` is sources. One search, one graph. Type sets the folder inside `notes/`. A `domain` property sets the focus. A `web` view (an Obsidian Base) shows web notes and web wiki pages together.
+
+```mermaid
+flowchart LR
+  subgraph V["llm_wiki/ : one Obsidian vault"]
+    N["notes/<br/>yours, never edited by the LLM"]
+    W["wiki/<br/>the LLM's pages"]
+    R["raw/<br/>sources"]
+  end
+  R -->|"wiki_ingest"| W
+  N <-->|"links"| W
+```
+
+One name is one file. A note and a wiki page never share a title, and `check_note.py` fails on a collision.
 
 ```mermaid
 flowchart LR
@@ -122,7 +135,7 @@ These layers hold your knowledge. The `.gitignore` blocks all of them. Keep your
 
 | layer | folder (local only, never committed here) | built by |
 |---|---|---|
-| LLM wiki | `llm_wiki/` with `raw/`, `wiki/`, `index.md`, `log.md` | `wiki_ingest` makes it on first run. open it in Obsidian |
+| LLM wiki and your notes | `llm_wiki/` with `raw/`, `wiki/`, `notes/`, `index.md`, `log.md` | `wiki_ingest` makes it on first run. open it in Obsidian |
 | Built skills | `skill_factory/inbox/`, `skill_factory/built/`, `skill_factory/feedback.md` | the three agents and `skill_smith` |
 | Study output | `Artifacts/` | the phases |
 | Your sources | `user-input-learning-text/` | you. read only |

@@ -1,7 +1,8 @@
 filters:
   and:
     - 'file.ext == "md"'
-    - '!file.inFolder("_obsidian")'
+    - 'file.inFolder("notes") || file.inFolder("wiki")'
+    - '!file.inFolder("notes/_obsidian")'
 formulas:
   links_out: 'file.links.length'
   links_in: 'file.backlinks.length'

@@ -14,6 +14,8 @@ Warns:
   - no wikilink in the note (an orphan idea)
   - no `# References` heading at the end
 --stubs lists unresolved [[links]]: the inventory of unknowns.
+Collisions (error): two files with one name. Obsidian resolves [[name]] to one file only, so a link would go to the wrong page.
+  Checked inside the notes tree, and against a sibling `wiki/` folder (the merged vault: <vault>/notes and <vault>/wiki), or --also <dir>.
 Stdlib only. Reads YAML frontmatter with a small parser (flat keys and lists, as the vault writes them).
 """
 from __future__ import annotations
@@ -73,7 +75,7 @@ def check(path: Path, root: Path | None, budget: int) -> tuple[list[str], list[s
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("target"); ap.add_argument("--budget", type=int, default=120); ap.add_argument("--stubs", action="store_true")
+    ap.add_argument("target"); ap.add_argument("--budget", type=int, default=120); ap.add_argument("--stubs", action="store_true"); ap.add_argument("--also", action="append", default=[], help="another tree whose file names must not collide")
     a = ap.parse_args()
     t = Path(a.target).expanduser()
     root = t if t.is_dir() else None
@@ -87,6 +89,18 @@ def main() -> int:
         bad += bool(errs)
         for l in LINK.findall(p.read_text(encoding="utf-8")):
             if l.strip().lower() not in names: stubs.setdefault(l.strip(), set()).add(p.stem)
+    if root is not None:
+        others = [Path(x) for x in a.also] + ([root.parent / "wiki"] if (root.parent / "wiki").is_dir() else [])
+        seen: dict[str, Path] = {}
+        for p in files:
+            k = p.stem.lower()
+            if k in seen:
+                print(f"ERROR collision: '{p.stem}' is in {seen[k].parent.name} and {p.parent.name}"); bad += 1
+            seen[k] = p
+        for o in others:
+            for q in o.rglob("*.md"):
+                if q.stem.lower() in seen and "raw" not in q.parts:
+                    print(f"ERROR collision: '{q.stem}' is a note and also {q}"); bad += 1
     if a.stubs:
         print("stubs (unknown terms, fill when learned):")
         for s, by in sorted(stubs.items()): print(f"  [[{s}]] <- {', '.join(sorted(by))}")

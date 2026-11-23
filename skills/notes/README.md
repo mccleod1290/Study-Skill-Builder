@@ -1,6 +1,6 @@
 # Notes
 
-Short, linked, searchable notes for security work. Two skills and one test.
+Short, linked, searchable notes for security work. Two skills and one test. They live inside the LLM wiki vault, in a folder of their own.
 
 Idea (after [Helton](https://grahamhelton.com/blog/human-memory-management)): the common word is the entry point, the rare words are atomic notes under it. In an engagement you search `sql injection`, not `error based sql`.
 
@@ -21,17 +21,37 @@ flowchart TD
 | `vault_setup` | `vault_setup/` | builds the vault: folders, templates, Bases, the new-note router plugin, a CSS snippet, seed notes |
 | `check_note.py` | `note_writer/scripts/` | the eval. Fails a note over 120 body words, with missing fields, or in the wrong folder. `--stubs` lists unknown terms |
 
-## One vault, not five
+## One vault: his notes and the LLM wiki
 
-Type sets the folder. `domain` sets the focus. `web.base` shows web notes only, so web pentest stays one click away.
+The vault is `llm_wiki/`. Two owner folders, one search, one graph, one `web` view.
 
 ```mermaid
 flowchart LR
-  N["Ctrl+N"] --> I["_obsidian/inbox"] --> T["type"] --> M["name"] --> D["domain (many)"] --> R["references (many, optional)"]
+  subgraph V["llm_wiki/ (one Obsidian vault)"]
+    N["notes/<br/>his, hand-written<br/>LLM reads and links, never edits"]
+    W["wiki/<br/>the LLM's pages"]
+    R["raw/<br/>sources, read only"]
+  end
+  R -->|"wiki_ingest"| W
+  N -->|"links in"| W
+  W -->|"links to"| N
+  B["web.base"] --- N
+  B --- W
+```
+
+One name is one file. A note and a wiki page never share a title. `check_note.py` fails on a collision, and `wiki_ingest` links to the note instead of writing a twin. The router acts only on the inbox, so it never touches a wiki page an agent just wrote.
+
+## One vault, not five
+
+Type sets the folder. `domain` sets the focus. `web.base` shows web notes and web wiki pages together, so web pentest stays one click away.
+
+```mermaid
+flowchart LR
+  N["Ctrl+N"] --> I["notes/_obsidian/inbox"] --> T["type"] --> M["name"] --> D["domain (many)"] --> R["references (many, optional)"]
   R --> F["frontmatter + template + move to type folder"]
 ```
 
-Cancel at any step: the note stays in the inbox.
+Cancel at any step: the note stays in the inbox. The inbox and `_obsidian/attachments` are git-ignored.
 
 ## Where the lenses fit
 
@@ -48,10 +68,10 @@ flowchart LR
 ## Install
 
 ```text
-python skills/notes/vault_setup/scripts/install_vault.py <dest> --dry-run
-python skills/notes/vault_setup/scripts/install_vault.py <dest>
+python skills/notes/vault_setup/scripts/install_vault.py llm_wiki --dry-run
+python skills/notes/vault_setup/scripts/install_vault.py llm_wiki
 node skills/notes/vault_setup/tests/test_router.js
-python skills/notes/note_writer/scripts/check_note.py <dest> --stubs
+python skills/notes/note_writer/scripts/check_note.py llm_wiki/notes --stubs
 ```
 
-Then open `<dest>` in Obsidian, turn on community plugins, enable New note router.
+Then open `llm_wiki/` in Obsidian, turn on community plugins, enable New note router.
