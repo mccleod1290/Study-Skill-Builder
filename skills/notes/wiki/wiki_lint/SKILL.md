@@ -12,7 +12,7 @@ context: fork
 
 # wiki_lint
 
-Read `skills/wiki/SCHEMA.md` first. The vault is `llm_wiki/` in the Study-OS root.
+Read `skills/notes/wiki/SCHEMA.md` first. The vault is `llm_wiki/` in the Study-OS root.
 
 ## Checks
 

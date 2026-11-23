@@ -64,7 +64,7 @@ That line is [kache's (@yacineMTB)](https://x.com/yacineMTB). [Andrej Karpathy](
 | Phase 4: diagnose | `skills/phase_4/` | finds the shared root of repeated misses, then routes back to the right phase |
 | Research skill | `research-skill/` (submodule) | searches and brings in outside resources that feed the wiki. lives in [mccleod1290/Research-Skill](https://github.com/mccleod1290/Research-Skill) |
 | Three agents | `.agents/` | `depth_agent`, `range_agent`, `altitude_agent` |
-| LLM wiki skills | `skills/wiki/` | `SCHEMA.md`, `wiki_ingest`, `wiki_query`, `wiki_lint` |
+| LLM wiki skills | `skills/notes/wiki/` | `SCHEMA.md`, `wiki_ingest`, `wiki_query`, `wiki_lint`. they live with the notes skills: one vault, two owners |
 | Obsidian skills | `skills/obsidian/` | vendored from kepano/obsidian-skills (MIT): page syntax, bases, canvas, CLI, clean web capture |
 | Skill factory | `skills/skill_factory/skill_smith/` | turns agent output into a guide, scripts, a checklist, a lab, and a test |
 | Self-improving loop | `skills/self_improve/trajectory_distill/` | reads a trajectory export, writes two HTML files, mails them, files gaps |
@@ -117,7 +117,7 @@ flowchart LR
   B --> J["frugal_judge"]
 ```
 
-Build the vault with `python skills/notes/vault_setup/scripts/install_vault.py <dest>`. Details: `skills/notes/README.md`.
+Build the vault with `python skills/notes/vault_setup/scripts/install_vault.py <dest>`. The wiki skills moved into `skills/notes/wiki/`. The notes use phase 2 skills (first principles, second order, writing style, brevity, diagrams) through local links: `python skills/notes/link_skills.py`. The links are junctions on Windows, symlinks elsewhere, and are not committed. Details: `skills/notes/README.md`.
 
 ## The three agents
 

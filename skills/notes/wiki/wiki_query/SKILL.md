@@ -11,7 +11,7 @@ effort: medium
 
 # wiki_query
 
-Read `skills/wiki/SCHEMA.md` first.
+Read `skills/notes/wiki/SCHEMA.md` first.
 
 ## Steps
 

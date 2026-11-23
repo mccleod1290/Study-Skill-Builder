@@ -35,7 +35,7 @@ Idea (Felix Rieseberg, "How to be more ambitious", score 4): depth is to work as
 
 - `Artifacts/artifacts/<slug>/depth_<what>.html`: the guide, the prerequisites, the mental model, a comparison table. HTML per `.rules/html-deliverables.md`.
 - `skill_factory/inbox/<slug>/depth_<what>.md`: one paragraph per skill candidate (a procedure that repeats, a tool to script, a check to automate).
-- One wiki note per new concept or mental model, filed with `skills/wiki/wiki_ingest`.
+- One wiki note per new concept or mental model, filed with `skills/notes/wiki/wiki_ingest`.
 
 ## Do not
 

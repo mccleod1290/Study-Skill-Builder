@@ -19,6 +19,9 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 | `skill_creator` | `skills/misc/skill_creator/SKILL.md` | misc skill. creates a new skill, or sharpens an existing one, to our house rules (.rules/skill-authoring.md): snake_case name, description in a >- block with trigger words, model and effort set, fork ... |
 | `note_writer` | `skills/notes/note_writer/SKILL.md` | notes skill. writes or trims one pentest note in the short style: one idea, flat bullets, most common name as title, rare terms as linked atomic notes, one typed frontmatter. |
 | `vault_setup` | `skills/notes/vault_setup/SKILL.md` | notes skill. adds the notes layer to the LLM wiki vault (`llm_wiki/notes/`): type folders, one frontmatter schema, templates, the web and all Bases, the new-note router plugin (asks type, name, domain... |
+| `wiki_ingest` | `skills/notes/wiki/wiki_ingest/SKILL.md` | llm wiki ingest. takes one source (a study artifact, an article, notes, a lab writeup) into the private llm_wiki vault: a source page, new or updated concept, connection, mental model and example page... |
+| `wiki_lint` | `skills/notes/wiki/wiki_lint/SKILL.md` | llm wiki lint. health check of the private llm_wiki vault: contradictions, stale claims, orphan pages, ideas with no page, missing links, data gaps, and the next questions and sources to add. |
+| `wiki_query` | `skills/notes/wiki/wiki_query/SKILL.md` | llm wiki query. answers a question from the private llm_wiki vault with citations to its pages, and files a good answer back as a new page so the work compounds. |
 | `defuddle` | `skills/obsidian/defuddle/SKILL.md` | Extract clean Markdown from HTML pages with Defuddle CLI. |
 | `json-canvas` | `skills/obsidian/json-canvas/SKILL.md` | Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections. Use when working with .canvas files, creating visual canvases, mind maps, flowcharts, or when the user mentions ... |
 | `knap` | `skills/obsidian/knap/SKILL.md` | Render Markdown from templates and structured data using Knap CLI. Use when the user asks to apply a Knap template, turn JSON or CSV data into notes, batch-generate Markdown files, or format Defuddle ... |
@@ -47,9 +50,6 @@ Read this first. It says where everything is. Regenerate with `python skills/scr
 | `harness_clerk` | `skills/phase_4/skills/harness_clerk/SKILL.md` | phase 4 clerk. does not duplicate the trajectory. reads Artifacts/sessions and files the study OS into one topic folder per subject, with harness timestamps. |
 | `trajectory_distill` | `skills/self_improve/trajectory_distill/SKILL.md` | self-improvement loop. reads a DeepSeek Harness trajectory export (every assistant reasoning step and tool call) and turns it into two HTML files: one with all assistant reasoning, one with the reason... |
 | `skill_smith` | `skills/skill_factory/skill_smith/SKILL.md` | skill factory. turns the skill candidates from the depth, range and altitude agents into runnable, private skills: a step-by-step guide, scripts, a checklist, a lab and a verification test. |
-| `wiki_ingest` | `skills/wiki/wiki_ingest/SKILL.md` | llm wiki ingest. takes one source (a study artifact, an article, notes, a lab writeup) into the private llm_wiki vault: a source page, new or updated concept, connection, mental model and example page... |
-| `wiki_lint` | `skills/wiki/wiki_lint/SKILL.md` | llm wiki lint. health check of the private llm_wiki vault: contradictions, stale claims, orphan pages, ideas with no page, missing links, data gaps, and the next questions and sources to add. |
-| `wiki_query` | `skills/wiki/wiki_query/SKILL.md` | llm wiki query. answers a question from the private llm_wiki vault with citations to its pages, and files a good answer back as a new page so the work compounds. |
 
 ## Agents
 
@@ -63,7 +63,7 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 
 ## Private stores (never exported)
 
-- `llm_wiki/`: the LLM wiki vault (Obsidian). Schema `skills/wiki/SCHEMA.md`. Skills `wiki_ingest`, `wiki_query`, `wiki_lint`.
+- `llm_wiki/`: the LLM wiki vault (Obsidian). Schema `skills/notes/wiki/SCHEMA.md`. Skills `wiki_ingest`, `wiki_query`, `wiki_lint`.
 - `skill_factory/`: `inbox/` skill candidates from the agents, `built/` runnable skills from `skill_smith`, `feedback.md` execution feedback.
 - `Artifacts/` and `user-input-learning-text/`: study output and his sources.
 - Public skeleton: `python skills/scripts/export_public.py <dest>` copies an allowlist and refuses on any private match.
@@ -82,7 +82,7 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 
 - `skills/_archive/`
 - `skills/misc/` skills: karpathy_agents_md, learn_from_sessions, skill_creator
-- `skills/notes/` skills: note_writer, vault_setup. files: README.md
+- `skills/notes/` skills: note_writer, vault_setup. files: README.md, link_skills.py
 - `skills/obsidian/` skills: defuddle, json-canvas, knap, obsidian-bases, obsidian-cli, obsidian-markdown. files: LICENSE, README.md
 - `skills/phase_1/` skills: context_clerk, interviewer, madhura-extraction-system-v1, map_maker. files: CHECK.md, PACKET.md, PATHS.md, README.md, RULES.md
 - `skills/phase_2/` skills: brevity_is_the_soul, diagrammer, explainer_video, first_principles, frugal_judge, reduce_ambiguity, second_order_thinking, socratic_questions, web_builder, writer_skill. files: CRITERIA.md, PAGE_ORDER.md, PATHS.md, README.md, RULES.md, VISUALS.md
@@ -91,7 +91,6 @@ Three specialized agents in `.agents/`. Each runs in its own context window. See
 - `skills/scripts/`. files: build_explorer.py, build_mindmap.py, check_coverage.py, check_visuals.py, export_public.py, learn_due.py, md_to_pdf.py, mindmap_template.html, repo_map.py, send_notes_email.py, tidy.py, validate_skill.py
 - `skills/self_improve/` skills: trajectory_distill. files: README.md
 - `skills/skill_factory/` skills: skill_smith
-- `skills/wiki/` skills: wiki_ingest, wiki_lint, wiki_query. files: SCHEMA.md
 
 ## Scripts
 

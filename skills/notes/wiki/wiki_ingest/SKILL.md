@@ -12,7 +12,7 @@ effort: medium
 
 # wiki_ingest
 
-Read `skills/wiki/SCHEMA.md` first. It is the contract for the vault at `llm_wiki/`.
+Read `skills/notes/wiki/SCHEMA.md` first. It is the contract for the vault at `llm_wiki/`.
 
 ## Inputs
 

@@ -36,8 +36,8 @@ Type sets the folder. `domain` sets the focus (`web`). `web.base` shows web note
 4. **Fill the frontmatter**, always the same: `title, date_created, description, type, domain (list), reference (list of wikilinks)`. Techniques add `attack`. `description` is one line, the gist.
    `reference` may hold a stub. A stub in `reference` is fine: it is a gap marker.
    **Hub link.** A new atomic note adds one bullet to its hub (`- [[new note]]: gist`). That one append is the only edit allowed to an existing note. No hub yet: create the hub as a link-only concept note.
-5. **Cut.** Apply `skills/phase_2/skills/brevity_is_the_soul`: explanation stays, fluff goes. Apply his voice (`skills/phase_2/skills/writer_skill`): short declaratives, no hype, no hedge.
-6. **Ambiguity gate.** Reread each bullet. Only a bullet that would stop him gets a lens, and each lens adds at most one line:
+5. **Cut.** Apply `skills/notes/linked/brevity_is_the_soul`: explanation stays, fluff goes. Apply his voice (`skills/notes/linked/writer_skill`): short declaratives, no hype, no hedge.
+6. **Ambiguity gate.** Reread each bullet. Only a bullet that would stop him gets a lens, and each lens adds at most one line (lens skills are in `skills/notes/linked/`; run `link_skills.py` once if the folder is empty):
    - law, convention and assumption blur: `first_principles`, one `why:` line
    - a decision or default, and the next event is the lesson: `second_order_thinking`, one `next:` line
    - he must test his own model: `socratic_questions`, live, opt-in

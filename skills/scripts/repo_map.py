@@ -8,7 +8,7 @@ import ast, re, sys
 from pathlib import Path
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / ".rules").is_dir())
-SKIPDIR = {".git", "sessions", "user-input-learning-text", "__pycache__", "node_modules"}
+SKIPDIR = {"linked", ".git", "sessions", "user-input-learning-text", "__pycache__", "node_modules"}
 
 
 def noise(name: str) -> bool:
@@ -80,7 +80,7 @@ def build():
         n, d = front(p)
         L.append(f"| `{n}` | `{rel(p)}` | {d} |")
     L += ["", "## Private stores (never exported)", "",
-          "- `llm_wiki/`: the LLM wiki vault (Obsidian). Schema `skills/wiki/SCHEMA.md`. Skills `wiki_ingest`, `wiki_query`, `wiki_lint`.",
+          "- `llm_wiki/`: the LLM wiki vault (Obsidian). Schema `skills/notes/wiki/SCHEMA.md`. Skills `wiki_ingest`, `wiki_query`, `wiki_lint`.",
           "- `skill_factory/`: `inbox/` skill candidates from the agents, `built/` runnable skills from `skill_smith`, `feedback.md` execution feedback.",
           "- `Artifacts/` and `user-input-learning-text/`: study output and his sources.",
           "- Public skeleton: `python skills/scripts/export_public.py <dest>` copies an allowlist and refuses on any private match."]

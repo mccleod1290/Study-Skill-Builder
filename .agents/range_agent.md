@@ -34,7 +34,7 @@ Idea (Felix Rieseberg, "How to be more ambitious", score 4): range is to bring i
 ## Output
 
 - `Artifacts/artifacts/<slug>/range_<what>.html`: a cross-topic map (diagram first, per `.rules/visuals-and-diagram-tools.md`), the use cases, a comparison table.
-- `llm_wiki/wiki/connections/<a>--<b>.md`: one note per real connection, filed with `skills/wiki/wiki_ingest`.
+- `llm_wiki/wiki/connections/<a>--<b>.md`: one note per real connection, filed with `skills/notes/wiki/wiki_ingest`.
 - `skill_factory/inbox/<slug>/range_<what>.md`: skill candidates (a checklist that spans fields, a variant hunt).
 
 ## Do not

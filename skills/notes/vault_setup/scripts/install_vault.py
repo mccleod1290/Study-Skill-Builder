@@ -21,7 +21,7 @@ FOLDERS = [f"{N}/{f}" for f in ["1_technology", "2_technique", "3_research", "4_
 
 VAULT_AGENTS = """# AGENTS.md: this vault
 
-One vault, two owners. `notes/` is his hand-written field notes: the LLM reads and links them and never edits them (one exception: `note_writer` appends one bullet to a hub). `wiki/` is the LLM's pages (schema: `skills/wiki/SCHEMA.md` in Study-OS). `raw/` is sources, read only.
+One vault, two owners. `notes/` is his hand-written field notes: the LLM reads and links them and never edits them (one exception: `note_writer` appends one bullet to a hub). `wiki/` is the LLM's pages (schema: `skills/notes/wiki/SCHEMA.md` in Study-OS). `raw/` is sources, read only.
 
 Rules for `notes/`:
 

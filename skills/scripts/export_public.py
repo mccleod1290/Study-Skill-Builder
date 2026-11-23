@@ -16,7 +16,7 @@ ALLOW = [".agents", ".rules", ".github", ".grok", "skills", "Documentation",
          "AGENTS.md", "WORKFLOW_STUDY.md", "WORKFLOW_EXPERT_CAPTURE.md"]
 
 # never copied, even inside an allowed folder
-SKIP_PARTS = {"__pycache__", "examples", "built", "inbox", ".git", "node_modules", "video"}
+SKIP_PARTS = {"linked", "__pycache__", "examples", "built", "inbox", ".git", "node_modules", "video"}
 SKIP_SUFFIX = (".pyc", ".mp4", ".mp3", ":Zone.Identifier", ".pdf")
 PRIVATE_DIRS = ["llm_wiki", "skill_factory", "Artifacts", "user-input-learning-text"]
 

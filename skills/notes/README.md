@@ -19,6 +19,8 @@ flowchart TD
 |---|---|---|
 | `note_writer` | `note_writer/` | writes or trims one note: flat bullets, common-name title, one schema, links while writing |
 | `vault_setup` | `vault_setup/` | builds the vault: folders, templates, Bases, the new-note router plugin, a CSS snippet, seed notes |
+| `wiki/` | `wiki/` | the LLM wiki skills, moved here from `skills/wiki/`: `SCHEMA.md`, `wiki_ingest`, `wiki_query`, `wiki_lint` |
+| `linked/` | `linked/` | local links to the phase 2 skills notes borrow (below) |
 | `check_note.py` | `note_writer/scripts/` | the eval. Fails a note over 120 body words, with missing fields, or in the wrong folder. `--stubs` lists unknown terms |
 
 ## One vault: his notes and the LLM wiki
@@ -52,6 +54,21 @@ flowchart LR
 ```
 
 Cancel at any step: the note stays in the inbox. The inbox and `_obsidian/attachments` are git-ignored.
+
+## Borrowed skills (linked, not copied)
+
+`python skills/notes/link_skills.py` links these into `skills/notes/linked/`. The source stays in `skills/phase_2/skills/`, one copy only. The links are local: git-ignored and never exported.
+
+| linked skill | used in notes for |
+|---|---|
+| `first_principles` | an ambiguous bullet: law, convention or assumption. One `why:` line |
+| `second_order_thinking` | a decision or default where the next event is the lesson. One `next:` line |
+| `socratic_questions` | opt-in, live. One question at a time |
+| `writer_skill` | his writing style: short declaratives, no hype |
+| `brevity_is_the_soul` | explanation stays, fluff goes |
+| `diagrammer` | a concept that can be drawn is drawn: an inline SVG in a research note |
+
+Windows needs admin or Developer Mode for a symlink. The script falls back to a directory junction, which needs neither. To remove a link use `rmdir`, never `rm -r`.
 
 ## Where the lenses fit
 

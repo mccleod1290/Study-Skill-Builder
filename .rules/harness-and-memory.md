@@ -12,7 +12,7 @@ What matters for us: the trajectory holds the model's reasoning **and** every to
 
 1. **Trajectory** (per run): raw, from the harness. Short-lived. The input to `trajectory_distill`.
 2. **Runtime memory** (per project, across sessions): `thedotmack/claude-mem` (opened 2026-10-25, score 3, third-party write-ups only). A plugin that records tool use and session summaries into a local store (SQLite plus vector search). Optional. Use it when the harness or client supports it, to carry context between sessions. It does not replace the curated wiki.
-3. **Curated memory** (long-lived, hand-shaped): `llm_wiki/` (Karpathy's LLM wiki, `skills/wiki/`). The refined, linked knowledge. This is the one that compounds. `claude-mem` is raw recall; `llm_wiki` is what we keep.
+3. **Curated memory** (long-lived, hand-shaped): `llm_wiki/` (Karpathy's LLM wiki, `skills/notes/wiki/`). The refined, linked knowledge. This is the one that compounds. `claude-mem` is raw recall; `llm_wiki` is what we keep.
 
 ## Rules
 
