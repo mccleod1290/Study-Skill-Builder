@@ -48,6 +48,10 @@ function buildFrontmatter(o) {
   if (o.type === "technique") fm.attack = o.attack || "";
   return fm;
 }
+// never wipe a note that already has content (imports, clippings, old notes). returns the new body, or null to keep it
+function newBody(existingText, templateText) {
+  return String(existingText || "").trim() === "" ? skeleton(null, templateText) : null;
+}
 function skeleton(type, templateText) {
   if (templateText && templateText.trim()) return templateText.replace(/\r\n/g, "\n");
   return "- \n\n# References\n";
@@ -132,7 +136,9 @@ module.exports = class NewNoteRouter extends Plugin {
   }
   async route(file) {
     const app = this.app;
-    this.busy.add(file.path);
+    const origin = file.path; // file.path changes on rename, so keep the original key
+    let dest = null;
+    this.busy.add(origin);
     try {
       const type = await ask(app, "Select the note type", TYPES.map((t) => t.id));
       if (type === null) return;
@@ -153,14 +159,15 @@ module.exports = class NewNoteRouter extends Plugin {
       const refs = await askMany(app, "Select a note to reference", notes, true);
       if (refs === null) return;
 
-      const dest = targetPath(type, name);
+      dest = targetPath(type, name);
       if (app.vault.getAbstractFileByPath(dest) && dest !== file.path) {
         new Notice("A note named '" + cleanTitle(name) + "' already exists in " + folderFor(type) + ". Nothing changed.");
         return;
       }
       const tplFile = app.vault.getAbstractFileByPath(TEMPLATES + "/" + type + ".md");
       const tpl = tplFile instanceof TFile ? await app.vault.read(tplFile) : "";
-      await app.vault.modify(file, skeleton(type, tpl));
+      const body = newBody(await app.vault.read(file), tpl);
+      if (body !== null) await app.vault.modify(file, body);
       await app.fileManager.processFrontMatter(file, (fm) =>
         Object.assign(fm, buildFrontmatter({ title: name, type, domains, references: refs, attack })));
       this.busy.add(dest);
@@ -169,8 +176,9 @@ module.exports = class NewNoteRouter extends Plugin {
     } catch (e) {
       new Notice("new-note-router: " + (e && e.message ? e.message : e));
     } finally {
-      this.busy.delete(file.path);
+      this.busy.delete(origin);
+      if (dest) this.busy.delete(dest);
     }
   }
 };
-module.exports.__core = { cleanTitle, folderFor, targetPath, buildFrontmatter, skeleton, TYPES, DOMAINS };
+module.exports.__core = { cleanTitle, folderFor, targetPath, buildFrontmatter, skeleton, newBody, TYPES, DOMAINS };

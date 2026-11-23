@@ -18,4 +18,10 @@ assert.deepStrictEqual(fm, { title: "error based sql", date_created: "2026-11-23
 assert.deepStrictEqual(Object.keys(c.buildFrontmatter({ title: "x", type: "concept", date: new Date(2026, 0, 1) })), ["title", "date_created", "description", "type", "domain", "reference"]);
 assert.strictEqual(c.skeleton("tool", ""), "- \n\n# References\n");
 assert.strictEqual(c.TYPES.length, 8);
+// data loss guard: a note with content is never overwritten
+const B = String.fromCharCode(92) + "n";
+assert.strictEqual(c.newBody("", ""), c.skeleton(null, ""));
+assert.strictEqual(c.newBody("   ", "- x"), "- x");
+assert.strictEqual(c.newBody("my old note body", ""), null);
+assert.strictEqual(c.newBody("---" + B + "title: x" + B + "---", ""), null);
 console.log("OK router core");

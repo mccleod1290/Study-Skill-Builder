@@ -28,10 +28,14 @@ Type sets the folder. `domain` sets the focus (`web`). `web.base` shows only web
 
 ## Steps
 
+0. **Search first.** Look for a note on the same idea (title, then the common name). Found: extend that note, do not write a twin. Not found: continue.
 1. **Pick the type and the title.** Types: technology, technique, research, tool, concept, prompt, bookmark, other. Title: the name he would search, lowercase, a bare noun phrase. A rare name is its own atomic note, linked up to its common name.
 2. **Write 3 to 8 flat bullets.** Under 20 words a line. One idea per bullet. Define by contrast when it helps: "stored now, run later". Then one-word headings only if needed: Usage, Detecting, Defense. End with `# References`.
 3. **Link while writing.** `[[wikilink]]` the first use of every term that has or should have a note. An unknown term stays a stub link. Do not fill a stub with a guess. Stubs are his list of gaps.
+   Defences and mitigations are not a type. A defence of one technique is a `# Defense` bullet in that note. A defence with its own life (`samesite cookie`) is a `concept`.
 4. **Fill the frontmatter**, always the same: `title, date_created, description, type, domain (list), reference (list of wikilinks)`. Techniques add `attack`. `description` is one line, the gist.
+   `reference` may hold a stub. A stub in `reference` is fine: it is a gap marker.
+   **Hub link.** A new atomic note adds one bullet to its hub (`- [[new note]]: gist`). That one append is the only edit allowed to an existing note. No hub yet: create the hub as a link-only concept note.
 5. **Cut.** Apply `skills/phase_2/skills/brevity_is_the_soul`: explanation stays, fluff goes. Apply his voice (`skills/phase_2/skills/writer_skill`): short declaratives, no hype, no hedge.
 6. **Ambiguity gate.** Reread each bullet. Only a bullet that would stop him gets a lens, and each lens adds at most one line:
    - law, convention and assumption blur: `first_principles`, one `why:` line
@@ -39,6 +43,10 @@ Type sets the folder. `domain` sets the focus (`web`). `web.base` shows only web
    - he must test his own model: `socratic_questions`, live, opt-in
    No ambiguity, no lens. The lens line replaces a weaker line when the note is at budget.
 7. **Check.** `python skills/notes/note_writer/scripts/check_note.py <note.md or vault>`. It must print OK. A note that grew past 120 body words fails. Cut, do not raise the budget.
+
+## Trimming a long note
+
+Split by idea: one note per idea, each under budget, each linked from the hub. Do not drop content silently. A tip or tool that has no home becomes a stub link (`[[burp csrf poc generator]]`) in the note it came from, or a line in a `3_research` note. Say in the reply what moved where.
 
 ## Screenshots
 

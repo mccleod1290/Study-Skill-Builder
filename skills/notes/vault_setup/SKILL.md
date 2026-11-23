@@ -18,7 +18,7 @@ Side effects: it writes a folder. Show the dry run first. It never overwrites a 
 ## Steps
 
 1. Dry run: `python skills/notes/vault_setup/scripts/install_vault.py <dest> --dry-run`. Read the list.
-2. Install: same command without `--dry-run`. Default destination: `Documents/Pentest Vault`. Do not point it at an existing vault with notes unless he says so. His old vaults (`Web Methodology 2.0` and others) stay untouched.
+2. Install: same command without `--dry-run`. Default destination: `Documents/Pentest Vault`. Do not point it at an existing vault with notes unless he says so. His existing vaults stay untouched.
 3. Check the plugin logic: `node skills/notes/vault_setup/tests/test_router.js` must print `OK router core`.
 4. Check the seed notes: `python skills/notes/note_writer/scripts/check_note.py <dest> --stubs` must print OK.
 5. Tell him the two manual steps Obsidian needs: open the folder as a vault, then Settings > Community plugins > turn on community plugins > enable New note router. Obsidian asks for this once per vault. A script cannot answer it.
